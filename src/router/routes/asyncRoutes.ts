@@ -43,7 +43,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     component: RoutesAlias.Layout,
     meta: {
       title: "工作流",
-      icon: '&#xee0d;',
+      icon: '&#xe7f3;',
       iconType: 'iconfont-oeyoews',
       roles: ['R_SUPER', 'R_ADMIN']
     },
