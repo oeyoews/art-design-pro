@@ -20,6 +20,9 @@ export enum RoutesAlias {
   // 仪表板
   Dashboard = '/dashboard/console', // 工作台
 
+  // 业务菜单
+  Workflow = '/workflow/list',
+
   // 系统管理
   User = '/system/user', // 账户
   Role = '/system/role', // 角色

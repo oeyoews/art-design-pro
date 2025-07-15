@@ -3,7 +3,7 @@
     <!-- 包含子菜单的项目 -->
     <ElSubMenu v-if="hasChildren(item)" :index="item.path || item.meta.title" :level="level">
       <template #title>
-        <MenuItemIcon :icon="item.meta.icon" :color="theme?.iconColor" />
+        <MenuItemIcon :icon="item.meta.icon" :icon-type="item.meta.iconType" :color="theme?.iconColor" />
         <span class="menu-name">
           {{ formatMenuTitle(item.meta.title) }}
         </span>
@@ -166,6 +166,11 @@
     name: 'MenuItemIcon',
     props: {
       /** 图标内容 */
+      iconType: {
+        type: String,
+        default: ''
+      },
+      /** 图标内容 */
       icon: {
         type: String,
         default: ''
@@ -177,9 +182,11 @@
       }
     },
     setup(props) {
+      // props.iconType="oeyoews", use iconfont-oeyoews instead iconfont-sys
+      const classNames = props?.iconType || 'iconfont-sys'
       return () =>
         h('i', {
-          class: 'menu-icon iconfont-sys',
+          class: classNames + ' menu-icon',
           style: props.color ? { color: props.color } : undefined,
           innerHTML: props.icon
         })

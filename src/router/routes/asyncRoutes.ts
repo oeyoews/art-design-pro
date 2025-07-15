@@ -38,6 +38,29 @@ export const asyncRoutes: AppRouteRecord[] = [
     ]
   },
   {
+    name: 'Workflow',
+    path: '/workflow',
+    component: RoutesAlias.Layout,
+    meta: {
+      title: "工作流",
+      icon: '&#xee0d;',
+      iconType: 'iconfont-oeyoews',
+      roles: ['R_SUPER', 'R_ADMIN']
+    },
+    children: [
+      {
+        path: 'list',
+        name: 'list',
+        component: RoutesAlias.Workflow,
+        meta: {
+          title: "工作流列表",
+          keepAlive: false,
+          fixedTab: true,
+        }
+      }
+    ]
+  },
+  {
     path: '/system',
     name: 'System',
     component: RoutesAlias.Layout,
