@@ -28,24 +28,6 @@ const fastEnterConfig: FastEnterConfig = {
       path: WEB_LINKS.DOCS,
       enabled: true,
       order: 2
-    },
-    {
-      name: '技术支持',
-      description: '技术支持与问题反馈',
-      icon: '&#xe86e;',
-      iconColor: '#ff6b6b',
-      path: WEB_LINKS.COMMUNITY,
-      enabled: true,
-      order: 3
-    },
-    {
-      name: '哔哩哔哩',
-      description: '技术分享与交流',
-      icon: '&#xe6b4;',
-      iconColor: '#FB7299',
-      path: WEB_LINKS.BILIBILI,
-      enabled: true,
-      order: 4
     }
   ],
   // 快速链接
