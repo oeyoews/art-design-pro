@@ -11,7 +11,7 @@ import { headerBarConfig } from './headerBar'
 const appConfig: SystemConfig = {
   // 系统信息
   systemInfo: {
-    name: 'Art Design Pro' // 系统名称
+    name: '后台管理平台', // 系统名称
   },
   // Element Plus 主题
   elementPlusTheme: {
@@ -131,7 +131,7 @@ const appConfig: SystemConfig = {
   systemSetting: {
     defaultMenuWidth: 240, // 菜单宽度
     defaultCustomRadius: '0.75', // 自定义圆角
-    defaultTabStyle: 'tab-default' // 标签样式
+    defaultTabStyle: 'tab-google' // 标签样式
   },
   // 快速入口配置
   fastEnter: fastEnterConfig,
