@@ -47,11 +47,11 @@ export const useSettingStore = defineStore(
     /** 是否显示工作台标签 */
     const showWorkTab = ref(true)
     /** 是否显示语言切换 */
-    const showLanguage = ref(true)
+    const showLanguage = ref(false)
     /** 是否显示进度条 */
     const showNprogress = ref(true)
     /** 是否显示设置引导 */
-    const showSettingGuide = ref(true)
+    const showSettingGuide = ref(false)
     /** 是否显示节日文本 */
     const showFestivalText = ref(false)
     /** 是否显示水印 */

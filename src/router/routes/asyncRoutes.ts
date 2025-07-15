@@ -110,6 +110,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     component: RoutesAlias.Layout,
     meta: {
       title: 'menus.result.title',
+      isHide: true,
       icon: '&#xe715;'
     },
     children: [
@@ -139,6 +140,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     component: RoutesAlias.Layout,
     meta: {
       title: 'menus.exception.title',
+      isHide: true,
       icon: '&#xe820;'
     },
     children: [

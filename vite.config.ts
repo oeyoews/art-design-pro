@@ -145,7 +145,7 @@ export default ({ mode }: { mode: string }) => {
       //     ]
       //   }
       // })
-      vueDevTools()
+      // vueDevTools()
     ],
     // 预加载项目必需的组件
     optimizeDeps: {
