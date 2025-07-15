@@ -1,0 +1,77 @@
+@font-face {
+  font-family: "iconfont-oeyoews"; /* Project id 4975675 */
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1752591393871') format('woff2'),
+       url('iconfont.woff?t=1752591393871') format('woff'),
+       url('iconfont.ttf?t=1752591393871') format('truetype');
+}
+
+.iconfont-oeyoews {
+  font-family: "iconfont-oeyoews" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-workflow:before {
+  content: "\e608";
+}
+
+.icon-icon-workflow:before {
+  content: "\e68b";
+}
+
+.icon-Workflow:before {
+  content: "\ea64";
+}
+
+.icon-workflow1:before {
+  content: "\ee0d";
+}
+
+.icon-workflow_line:before {
+  content: "\e65c";
+}
+
+.icon-a-nav_WorkflowSettings:before {
+  content: "\e743";
+}
+
+.icon-workFlow:before {
+  content: "\e6f2";
+}
+
+.icon-workflow2:before {
+  content: "\e7f3";
+}
+
+.icon-Workflow1:before {
+  content: "\eae4";
+}
+
+.icon-shenglvehao:before {
+  content: "\e622";
+}
+
+.icon-git1:before {
+  content: "\e6ea";
+}
+
+.icon-git:before {
+  content: "\e69a";
+}
+
+.icon-shuiliang:before {
+  content: "\e601";
+}
+
+.icon-jiaoxuefansi:before {
+  content: "\1020d";
+}
+
+.icon-dikuai:before {
+  content: "\e602";
+}
+
