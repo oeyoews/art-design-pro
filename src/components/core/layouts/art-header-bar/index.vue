@@ -162,10 +162,10 @@
                     <i class="menu-icon iconfont-sys">&#xe8d6;</i>
                     <span class="menu-txt">{{ $t('topBar.user.github') }}</span>
                   </li> -->
-                  <li @click="lockScreen()">
+                  <!-- <li @click="lockScreen()">
                     <i class="menu-icon iconfont-sys">&#xe817;</i>
                     <span class="menu-txt">{{ $t('topBar.user.lockScreen') }}</span>
-                  </li>
+                  </li> -->
                   <div class="line"></div>
                   <div class="logout-btn" @click="loginOut">
                     {{ $t('topBar.user.logout') }}
