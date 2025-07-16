@@ -24,4 +24,10 @@ export class UserService {
       params
     })
   }
+  static getUserWorkflowList(params: Api.Common.PaginatingSearchParams) {
+    return request.get<Api.User.UserListData>({
+      url: '/api/workflow/list',
+      params
+    })
+  }
 }
