@@ -59,6 +59,12 @@
           </ElTag>
         </template>
 
+        <template #environment="{ row }">
+          <ElTag :type="getEnvText(row.environment).type" effect="light">
+            {{ getEnvText(row.environment).text }}
+          </ElTag>
+        </template>
+
         <!-- 操作列 -->
         <template #operation="{ row }">
           <div class="operation-buttons">
@@ -152,10 +158,24 @@
     'stopped': { type: 'warning', text: '已停止' }
   } as const
 
+  const defaultObj = {
+    type: "", text:""
+  }
+
   const getUserStatusConfig = (status: string) => {
-    console.log(status)
     // @ts-ignore
-    return WORKFLOW_STATUS_CONFIG[status] || { type: '', text: '' }
+    return WORKFLOW_STATUS_CONFIG[status] || defaultObj;
+  }
+
+  const ENV_DICT = {
+    'dev': { type: 'danger', text: '开发' },
+    'test': { type: 'primary', text: '测试' },
+    'prod': { type: 'success', text: '生产' }
+  } as const;
+
+  const getEnvText = (value: string) => {
+    // @ts-ignore
+    return ENV_DICT[value] || defaultObj;
   }
 
   // 搜索表单配置
@@ -298,8 +318,8 @@
         {
           prop: 'name',
           label: '工作流名称',
-          minWidth: 200,
-          sortable: true
+          minWidth: 150,
+          sortable: false
         },
         {
           prop: 'status',
@@ -344,6 +364,7 @@
           prop: 'environment',
           label: '环境',
           width: 100,
+          useSlot: true,
           sortable: true
         },
         {
@@ -412,7 +433,7 @@
         addCacheLog(
           `📝 响应信息: total=${response.total}, current=${response.current}, size=${response.size}`
         )
-        ElMessage.success(`加载 ${data.length} 条数据成功`)
+        // ElMessage.success(`加载 ${data.length} 条数据成功`)
       },
       onError: (error) => {
         console.error('❌ 数据加载失败:', error)
