@@ -88,9 +88,7 @@
   type ListItem = {
     id: number
     name: string
-    phone: string
     status: string
-    department: string
     date: string
   }
 
@@ -110,9 +108,7 @@
     current: 1,
     size: 20,
     name: '',
-    phone: '',
     status: '',
-    department: '',
     dateRange: undefined
   })
 
@@ -287,9 +283,7 @@
         // pageNum: 1, // 自定义分页字段映射， 默认为 current
         // pageSize: 20, // 自定义分页字段映射， 默认为 size
         name: '',
-        phone: '',
         status: '',
-        department: '',
         dateRange: undefined
       },
       // 自定义分页字段映射，同时需要在 apiParams 中配置字段名
