@@ -34,7 +34,7 @@ export const asyncRoutes: AppRouteRecord[] = [
           keepAlive: false,
           fixedTab: true
         }
-      }
+      },
     ]
   },
   {
@@ -49,11 +49,21 @@ export const asyncRoutes: AppRouteRecord[] = [
     },
     children: [
       {
-        path: 'list',
+        path: 'basic',
+        name: 'basic',
+        component: RoutesAlias.WorkflowBasic,
+        meta: {
+          title: "基本表格",
+          keepAlive: false,
+          fixedTab: true,
+        }
+      },
+      {
+        path: 'table',
         name: 'list',
         component: RoutesAlias.Workflow,
         meta: {
-          title: "工作流列表",
+          title: "列表示例",
           keepAlive: false,
           fixedTab: true,
         }

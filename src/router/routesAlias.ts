@@ -21,7 +21,8 @@ export enum RoutesAlias {
   Dashboard = '/dashboard/console', // 工作台
 
   // 业务菜单
-  Workflow = '/workflow/list',
+  Workflow = '/workflow/tables',
+  WorkflowBasic = '/workflow/tables/basic',
 
   // 系统管理
   User = '/system/user', // 账户
