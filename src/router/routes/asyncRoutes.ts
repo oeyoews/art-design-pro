@@ -49,6 +49,16 @@ export const asyncRoutes: AppRouteRecord[] = [
     },
     children: [
       {
+        path: 'list',
+        name: 'list',
+        component: RoutesAlias.WorkflowList,
+        meta: {
+          title: "列表",
+          keepAlive: false,
+          fixedTab: true,
+        }
+      },
+      {
         path: 'basic',
         name: 'basic',
         component: RoutesAlias.WorkflowBasic,
@@ -60,7 +70,7 @@ export const asyncRoutes: AppRouteRecord[] = [
       },
       {
         path: 'table',
-        name: 'list',
+        name: 'table',
         component: RoutesAlias.Workflow,
         meta: {
           title: "列表示例",

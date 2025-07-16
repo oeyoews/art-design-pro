@@ -23,6 +23,7 @@ export enum RoutesAlias {
   // 业务菜单
   Workflow = '/workflow/tables',
   WorkflowBasic = '/workflow/tables/basic',
+  WorkflowList = '/workflow/list',
 
   // 系统管理
   User = '/system/user', // 账户
