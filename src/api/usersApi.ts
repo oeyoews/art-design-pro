@@ -4,7 +4,8 @@ export class UserService {
   // 登录
   static login(params: Api.Auth.LoginParams) {
     return request.post<Api.Auth.LoginResponse>({
-      url: '/api/auth/login',
+      // url: '/api/auth/login',
+      url: '/api/login',
       params
       // showErrorMessage: false // 不显示错误消息
     })
@@ -13,7 +14,8 @@ export class UserService {
   // 获取用户信息
   static getUserInfo() {
     return request.get<Api.User.UserInfo>({
-      url: '/api/user/info'
+      // url: '/api/user/info'
+      url: '/api/getInfo'
     })
   }
 

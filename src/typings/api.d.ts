@@ -42,6 +42,7 @@ declare namespace Api {
     /** 登录参数 */
     interface LoginParams {
       userName: string
+      username: string // ruoyi
       password: string
     }
 
