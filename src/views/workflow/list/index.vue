@@ -82,14 +82,15 @@
 </template>
 
 <script setup lang="ts">
+  import { columns as columnList} from './columns'
   import { ref, computed, watch, nextTick } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { Plus, Delete, Edit, Search, Refresh, QuestionFilled } from '@element-plus/icons-vue'
   import { useTable } from '@/composables/useTable'
   import { UserService } from '@/api/usersApi'
-  import type { SearchFormItem } from '@/types'
+  import { searchItems } from './search'
 
-  defineOptions({ name: 'AdvancedTableDemo' })
+  defineOptions({ name: 'WorkflowList' })
 
   type ListItem = {
     id: number
@@ -107,23 +108,6 @@
   const tableRef = ref()
 
   const enableErrorDemo = ref(false)
-
-  // 缓存调试状态
-  const cacheDebugLogs = ref<string[]>([])
-  const requestParams = ref<any>({
-    current: 1,
-    size: 20,
-    name: '',
-    status: '',
-    dateRange: undefined
-  })
-
-  // 缓存键信息
-  const cacheKeys = ref<string[]>([])
-
-  // 事件演示相关
-  const eventDemoEnabled = ref(false)
-  const eventLogs = ref<Array<{ type: string; message: string; time: string }>>([])
 
   // 表格配置演示
   const tableConfig = ref({
@@ -159,7 +143,7 @@
   } as const
 
   const defaultObj = {
-    type: "", text:""
+    type: "primary", text:""
   }
 
   const getUserStatusConfig = (status: string) => {
@@ -178,60 +162,6 @@
     return ENV_DICT[value] || defaultObj;
   }
 
-  // 搜索表单配置
-  const searchItems: SearchFormItem[] = [
-    {
-      prop: 'name',
-      label: '工作流名称',
-      type: 'input',
-      config: {
-        placeholder: '请输入工作流名称'
-      }
-    },
-    {
-      prop: 'status',
-      label: '状态',
-      type: 'select',
-      options: [
-        { label: '全部', value: '' },
-        { label: '运行中', value: 'running' },
-        { label: '等待中', value: 'pending' },
-        { label: '已完成', value: 'completed' },
-        { label: '失败', value: 'failed' },
-        { label: '已停止', value: 'stopped' }
-      ]
-    },
-    {
-      prop: 'owner',
-      label: '所有者',
-      type: 'input',
-      config: {
-        placeholder: '请输入所有者'
-      }
-    },
-    {
-      prop: 'environment',
-      label: '环境',
-      type: 'select',
-      options: [
-        { label: '全部', value: '' },
-        { label: '开发', value: 'dev' },
-        { label: '测试', value: 'test' },
-        { label: '生产', value: 'prod' }
-      ]
-    },
-    {
-      prop: 'dateRange',
-      label: '执行时间',
-      type: 'daterange',
-      config: {
-        type: 'daterange',
-        format: 'YYYY-MM-DD',
-        valueFormat: 'YYYY-MM-DD'
-      }
-    }
-  ]
-
   // 模拟API错误
   const simulateApiError = (originalFn: any) => {
     return async (params: any) => {
@@ -247,8 +177,6 @@
     // 数据相关
     tableData,
     isLoading,
-    hasError,
-    hasData,
 
     // 分页相关
     paginationState,
@@ -261,23 +189,12 @@
 
     // 数据操作
     searchData,
-    searchDataDebounced,
 
     // 刷新策略
     refreshAll,
-    refreshSoft,
     refreshAfterCreate,
     refreshAfterUpdate,
     refreshAfterRemove,
-
-    // 缓存控制
-    cacheStatistics,
-    invalidateCache,
-    clearExpiredCache,
-
-    // 请求控制
-    abortRequest,
-    clearAllData,
 
     // 列配置
     columns,
@@ -286,142 +203,26 @@
     // 核心配置
     core: {
       apiFn: (params) => {
-        // 在API调用前添加调试信息
-        const requestKey = JSON.stringify(params)
         console.log('🚀 API 请求参数:', params)
-        addCacheLog(`🚀 API 请求: current=${params.current}, size=${params.size}`)
-        addCacheLog(`🔑 请求键: ${requestKey.substring(0, 100)}...`)
-
-        // 记录缓存键（这里假设会被缓存）
-        updateCacheKeys(requestKey)
 
         return simulateApiError(getUserWorkflowList)(params)
       },
       apiParams: {
         current: 1,
         size: 20,
-        // pageNum: 1, // 自定义分页字段映射， 默认为 current
-        // pageSize: 20, // 自定义分页字段映射， 默认为 size
+        pageNum: 1, // 自定义分页字段映射， 默认为 current
+        pageSize: 20, // 自定义分页字段映射， 默认为 size
         name: '',
         status: '',
         dateRange: undefined
       },
       // 自定义分页字段映射，同时需要在 apiParams 中配置字段名
-      // paginationKey: {
-      //   current: 'pageNum',
-      //   size: 'pageSize'
-      // },
+      paginationKey: {
+        current: 'pageNum',
+        size: 'pageSize'
+      },
       immediate: true,
-      columnsFactory: () => [
-        { type: 'selection', width: 50 },
-        { type: 'globalIndex', width: 60, label: '序号' },
-        {
-          prop: 'name',
-          label: '工作流名称',
-          minWidth: 150,
-          sortable: false
-        },
-        {
-          prop: 'status',
-          label: '状态',
-          width: 100,
-          useSlot: true,
-          sortable: true
-        },
-        {
-          prop: 'executions',
-          label: '执行次数',
-          width: 120,
-          sortable: true
-        },
-        {
-          prop: 'avgTime',
-          label: '平均耗时',
-          width: 120,
-          sortable: true
-        },
-        {
-          prop: 'successRate',
-          label: '成功率',
-          width: 120,
-          sortable: true,
-          // @ts-ignore
-          formatter: (row) => `${row.successRate}%`
-        },
-        {
-          prop: 'priority',
-          label: '优先级',
-          width: 100,
-          sortable: true
-        },
-        {
-          prop: 'owner',
-          label: '所有者',
-          width: 120,
-          sortable: true
-        },
-        {
-          prop: 'environment',
-          label: '环境',
-          width: 100,
-          useSlot: true,
-          sortable: true
-        },
-        {
-          prop: 'startTime',
-          label: '开始时间',
-          width: 160,
-          sortable: true
-        },
-        {
-          prop: 'endTime',
-          label: '结束时间',
-          width: 160,
-          sortable: true
-        },
-        {
-          prop: 'operation',
-          label: '操作',
-          width: 190,
-          useSlot: true,
-          fixed: 'right'
-        }
-      ]
-    },
-
-    // 数据处理
-    transform: {
-      // dataTransformer: (records: any) => {
-        // if (!Array.isArray(records)) return []
-
-        // return records.map((item: any, index: number) => ({
-        //   ...item,
-        //   avatar: ACCOUNT_TABLE_DATA[index % ACCOUNT_TABLE_DATA.length].avatar,
-        //   department: ['技术部', '产品部', '运营部', '市场部', '设计部'][
-        //     Math.floor(Math.random() * 5)
-        //   ],
-        //   score: Math.floor(Math.random() * 5) + 1,
-        //   status: ['1', '2', '3', '4'][Math.floor(Math.random() * 4)]
-        // }))
-      // }
-      // 自定义响应适配器，处理后端特殊的返回格式
-      // responseAdapter: (data: any) => {
-      //   const { list, total, pageNum, pageSize } = data
-      //   return {
-      //     records: list,
-      //     total: total,
-      //     current: pageNum,
-      //     size: pageSize
-      //   }
-      // }
-    },
-
-    // 性能优化
-    performance: {
-      enableCache: true,
-      cacheTime: 5 * 60 * 1000, // 5分钟
-      debounceTime: 300,
-      maxCacheSize: 100
+      columnsFactory: () => columnList
     },
 
     // 生命周期钩子
@@ -429,28 +230,14 @@
       onSuccess: (data, response) => {
         console.log('✅ 数据加载成功:', data.length, '条')
         console.log('📊 响应详情:', response)
-        addCacheLog(`✅ 网络请求成功: ${data.length} 条数据`)
-        addCacheLog(
-          `📝 响应信息: total=${response.total}, current=${response.current}, size=${response.size}`
-        )
         // ElMessage.success(`加载 ${data.length} 条数据成功`)
       },
       onError: (error) => {
         console.error('❌ 数据加载失败:', error)
-        addCacheLog(`❌ 请求失败: ${error.message}`)
         ElMessage.error(error.message)
-      },
-      onCacheHit: (data, response) => {
-        console.log('🎯 缓存命中:', data.length, '条')
-        console.log('🔑 缓存来源:', response)
-        addCacheLog(
-          `🎯 缓存命中: ${data.length} 条数据 (current=${response.current}, size=${response.size})`
-        )
-        ElMessage.info('数据来自缓存')
       },
       resetFormCallback: () => {
         console.log('🔄 表单已重置')
-        addCacheLog('🔄 表单已重置')
       }
     },
 
@@ -464,42 +251,22 @@
   // 事件处理函数
   const handleSelectionChange = (selection: ListItem[]) => {
     selectedRows.value = selection
-    logEvent('选择变更', `已选择 ${selection.length} 行数据`)
-  }
-
-
-  // 事件日志记录
-  const logEvent = (type: string, message: string) => {
-    if (!eventDemoEnabled.value) return
-
-    const time = new Date().toLocaleTimeString()
-    eventLogs.value.unshift({ type, message, time })
-
-    // 限制日志数量
-    if (eventLogs.value.length > 20) {
-      eventLogs.value = eventLogs.value.slice(0, 20)
-    }
   }
 
   const handleSearch = () => {
     console.log('搜索参数:', searchFormState.value)
     // 将搜索表单的值应用到 searchState
     Object.assign(searchState, searchFormState.value)
-    // 更新请求参数显示
-    requestParams.value = { ...searchState }
-    addCacheLog(`🔍 执行搜索: ${JSON.stringify(searchFormState.value)}`)
     searchData()
   }
 
   const handleReset = () => {
-    addCacheLog('🔄 重置搜索')
     // 重置搜索表单状态
     searchFormState.value = { ...initialSearchState }
     resetSearch()
   }
 
   const handleRefresh = () => {
-    addCacheLog('🔄 手动刷新')
     refreshAll()
   }
 
@@ -561,52 +328,6 @@
     }
   }
 
-
-  // 添加缓存调试日志
-  const addCacheLog = (message: string) => {
-    const timestamp = new Date().toLocaleTimeString()
-    cacheDebugLogs.value.unshift(`[${timestamp}] ${message}`)
-    if (cacheDebugLogs.value.length > 20) {
-      cacheDebugLogs.value = cacheDebugLogs.value.slice(0, 20)
-    }
-  }
-
-  // 更新缓存键列表
-  const updateCacheKeys = (key: string, operation: 'add' | 'remove' = 'add') => {
-    if (operation === 'add' && !cacheKeys.value.includes(key)) {
-      cacheKeys.value.push(key)
-      addCacheLog(`🔑 新增缓存键: ${getCacheKeySummary(key)}`)
-    } else if (operation === 'remove') {
-      const index = cacheKeys.value.indexOf(key)
-      if (index > -1) {
-        cacheKeys.value.splice(index, 1)
-        addCacheLog(`🗑️ 移除缓存键: ${getCacheKeySummary(key)}`)
-      }
-    }
-  }
-
-  // 获取缓存键摘要
-  const getCacheKeySummary = (key: string) => {
-    try {
-      const params = JSON.parse(key)
-      return `页码: ${params.current || 1}, 大小: ${params.size || 20}${params.name ? ', 名称: ' + params.name : ''}${params.status ? ', 状态: ' + params.status : ''}`
-    } catch {
-      return '无效的缓存键'
-    }
-  }
-
-  // 监听分页和搜索状态变化
-  watch(
-    () => [paginationState.current, paginationState.size, searchFormState.value],
-    ([current, size, search]) => {
-      requestParams.value = {
-        ...(search as any),
-        current,
-        size
-      }
-    },
-    { deep: true, immediate: true }
-  )
 </script>
 
 <style lang="scss" scoped>
