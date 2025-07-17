@@ -345,7 +345,7 @@
     sizes: DEFAULT_PAGINATION_SIZES,
     align: 'center',
     layout: '',
-    hideOnSinglePage: true,
+    hideOnSinglePage: false,
     componentSize: 'default'
   }
 

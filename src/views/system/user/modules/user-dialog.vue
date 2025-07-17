@@ -100,7 +100,7 @@
 
     Object.assign(formData, {
       username: isEdit ? row.userName || '' : '',
-      phone: isEdit ? row.userPhone || '' : '',
+      phone: isEdit ? row.phonenumber || '' : '',
       gender: isEdit ? row.userGender || '男' : '男',
       role: isEdit ? (Array.isArray(row.userRoles) ? row.userRoles : []) : []
     })

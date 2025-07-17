@@ -22,10 +22,12 @@ export class UserService {
   // 获取用户列表
   static getUserList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({
-      url: '/api/user/list',
+      // url: '/api/user/list',
+      url: "/api/system/user/list",
       params
     })
   }
+  // test
   static getUserWorkflowList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({
       url: '/api/workflow/list',

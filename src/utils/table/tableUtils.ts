@@ -94,7 +94,7 @@ export const defaultResponseAdapter = <T>(response: unknown): ApiResponse<T> => 
     }
 
     // 尝试从响应中提取数组字段
-    const possibleArrayFields = ['data', 'list', 'items', 'records', 'result']
+    const possibleArrayFields = ['data', 'list', 'items', 'records', 'result', 'rows']
     for (const field of possibleArrayFields) {
       if (field in res && Array.isArray(res[field])) {
         const records = res[field] as T[]

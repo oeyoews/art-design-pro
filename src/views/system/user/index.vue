@@ -65,6 +65,7 @@
 
   // 用户状态配置
   const USER_STATUS_CONFIG = {
+    '0': { type: 'success' as const, text: '启用' },
     '1': { type: 'success' as const, text: '在线' },
     '2': { type: 'info' as const, text: '离线' },
     '3': { type: 'warning' as const, text: '异常' },
@@ -102,11 +103,17 @@
     core: {
       apiFn: getUserList,
       apiParams: {
-        current: 1,
-        size: 20,
+        // current: 1,
+        // size: 20,
+        pageNum: 1,
+        pageSize: 20,
         name: '',
-        phone: '',
+        phonenumber: '',
         address: undefined
+      },
+      paginationKey: {
+        current: 'pageNum',
+        size: 'pageSize'
       },
       columnsFactory: () => [
         { type: 'selection' }, // 勾选列
@@ -117,8 +124,8 @@
           label: '用户名',
           minWidth: width.value < 500 ? 220 : '',
           formatter: (row) => {
-            return h('div', { class: 'user', style: 'display: flex; align-items: center' }, [
-              h('img', { class: 'avatar', src: row.avatar }),
+            return h('div', { class: 'user', style: 'display: flex; align-items: center;' }, [
+              h('img', { class: 'avatar', style:" border-radius: 50%;", src: row.avatar }),
               h('div', {}, [
                 h('p', { class: 'user-name' }, row.userName),
                 h('p', { class: 'email' }, row.userEmail)
@@ -127,12 +134,12 @@
           }
         },
         {
-          prop: 'userGender',
+          prop: 'sex',
           label: '性别',
           sortable: true,
-          formatter: (row) => row.userGender
+          formatter: (row) => (row.sex == "0" ? '男' : '女')
         },
-        { prop: 'userPhone', label: '手机号' },
+        { prop: 'phonenumber', label: '手机号' },
         {
           prop: 'status',
           label: '状态',

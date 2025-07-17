@@ -85,6 +85,7 @@ declare namespace Api {
       status: '1' | '2' | '3' | '4' // 1: 在线 2: 离线 3: 异常 4: 注销
       userName: string
       userGender: string
+      sex: string
       nickName: string
       userPhone: string
       userEmail: string

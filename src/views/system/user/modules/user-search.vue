@@ -12,7 +12,7 @@
 
   interface Emits {
     (e: 'update:modelValue', value: any): void
-    (e: 'search'): void
+    (e: 'search', value: any): void
     (e: 'reset'): void
   }
 
@@ -20,20 +20,19 @@
 
   // 定义表单搜索初始值
   const initialSearchState = {
-    name: '',
-    phone: '',
-    address: '',
-    level: 'normal',
-    email: '',
-    date: '2025-01-05',
-    daterange: ['2025-01-01', '2025-02-10'],
-    status: '1'
+    userName: '',
+    phonenumber: undefined,
+    // level: 'normal',
+    email: undefined,
+    daterange: [],
+    status: undefined,
   }
 
   const searchFormState = ref({ ...initialSearchState })
 
   // 重置表单
   const handleReset = () => {
+    searchFormState.value = { ...initialSearchState }
     emit('update:modelValue', { ...initialSearchState })
     emit('reset')
   }
@@ -41,7 +40,12 @@
   // 搜索处理
   const handleSearch = () => {
     console.log('搜索参数:', searchFormState.value)
-    emit('search')
+    const { daterange, ...params } = searchFormState.value
+    emit('search', {
+      ...params,
+      startTime: daterange[0],
+      endTime: daterange[1]
+    })
   }
 
   // 表单项变更处理
@@ -53,7 +57,7 @@
   const formItems: SearchFormItem[] = [
     {
       label: '用户名',
-      prop: 'name',
+      prop: 'userName',
       type: 'input',
       config: {
         clearable: true
@@ -62,31 +66,7 @@
     },
     {
       label: '电话',
-      prop: 'phone',
-      type: 'input',
-      config: {
-        clearable: true
-      },
-      onChange: handleFormChange
-    },
-    {
-      label: '用户等级',
-      prop: 'level',
-      type: 'select',
-      config: {
-        clearable: true
-      },
-      options: () => [
-        { label: '普通用户', value: 'normal' },
-        { label: 'VIP用户', value: 'vip' },
-        { label: '高级VIP', value: 'svip' },
-        { label: '企业用户', value: 'enterprise', disabled: true }
-      ],
-      onChange: handleFormChange
-    },
-    {
-      label: '地址',
-      prop: 'address',
+      prop: 'phonenumber',
       type: 'input',
       config: {
         clearable: true
@@ -104,15 +84,15 @@
     },
     // 支持 9 种日期类型定义
     // 具体可参考 src/components/core/forms/art-search-bar/widget/art-search-date/README.md
-    {
-      prop: 'date',
-      label: '日期',
-      type: 'date',
-      config: {
-        type: 'date',
-        placeholder: '请选择日期'
-      }
-    },
+    // {
+    //   prop: 'date',
+    //   label: '日期',
+    //   type: 'date',
+    //   config: {
+    //     type: 'date',
+    //     placeholder: '请选择日期'
+    //   }
+    // },
     {
       prop: 'daterange',
       label: '日期范围',
@@ -126,7 +106,7 @@
     {
       label: '状态',
       prop: 'status',
-      type: 'radio',
+      type: 'select',
       options: [
         { label: '在线', value: '1' },
         { label: '离线', value: '2' }
