@@ -149,8 +149,8 @@
     {
       key: 'super',
       label: t('login.roles.super'),
-      userName: 'Super',
-      password: '123456',
+      userName: 'admin',
+      password: 'admin123',
       roles: ['R_SUPER']
     },
     {
@@ -230,6 +230,7 @@
 
       const { token, refreshToken } = await UserService.login({
         userName: username,
+        username,
         password
       })
 
