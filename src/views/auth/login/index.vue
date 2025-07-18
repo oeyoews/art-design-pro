@@ -68,7 +68,7 @@
                 show-password
               />
             </ElFormItem>
-            <div class="drag-verify">
+            <!-- <div class="drag-verify">
               <div class="drag-verify-content" :class="{ error: !isPassing && isClickPass }">
                 <ArtDragVerify
                   ref="dragVerify"
@@ -84,7 +84,7 @@
               <p class="error-text" :class="{ 'show-error-text': !isPassing && isClickPass }">{{
                 $t('login.placeholder[2]')
               }}</p>
-            </div>
+            </div> -->
 
             <div class="forget-password">
               <ElCheckbox v-model="formData.rememberPassword">{{
@@ -218,10 +218,10 @@
       if (!valid) return
 
       // 拖拽验证
-      if (!isPassing.value) {
-        isClickPass.value = true
-        return
-      }
+      // if (!isPassing.value) {
+      //   isClickPass.value = true
+      //   return
+      // }
 
       loading.value = true
 
