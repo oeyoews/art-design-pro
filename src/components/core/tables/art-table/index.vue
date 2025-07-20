@@ -173,7 +173,6 @@
     } else {
       offset = paginationHeight.value === 0 ? 30 : 90
     }
-    console.log(offset)
     return { height: offset === 0 ? '100%' : `calc(100% - ${offset}px)` }
   })
 

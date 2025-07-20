@@ -259,14 +259,14 @@
       }
     } finally {
       loading.value = false
-      resetDragVerify()
+      // resetDragVerify()
     }
   }
 
   // 重置拖拽验证
-  const resetDragVerify = () => {
-    dragVerify.value.reset()
-  }
+  // const resetDragVerify = () => {
+  //   dragVerify.value.reset()
+  // }
 
   // 登录成功提示
   const showLoginSuccessNotice = () => {
