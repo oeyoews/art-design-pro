@@ -1,8 +1,8 @@
 @use '@styles/variables.scss' as *;
 
 .art-table {
-  height: 100%;
   position: relative;
+  height: 100%;
 
   .el-table {
     height: 100%;
@@ -10,6 +10,7 @@
   }
 
   :deep(.el-loading-mask) {
+    z-index: 100;
     background-color: var(--art-main-bg-color) !important;
   }
 
@@ -31,7 +32,11 @@
 
   .pagination {
     display: flex;
-    margin-top: 15px;
+    margin-top: 13px;
+
+    :deep(.el-select) {
+      width: 102px !important;
+    }
 
     // 分页对齐方式
     &.left {
@@ -45,6 +50,41 @@
     &.right {
       justify-content: flex-end;
     }
+
+    // 自定义分页组件样式
+    &.custom-pagination {
+      :deep(.el-pagination) {
+        .btn-prev,
+        .btn-next {
+          background-color: transparent;
+          border: 1px solid var(--art-gray-300);
+          transition: all 0.3s;
+
+          &:hover:not(.is-disabled) {
+            color: var(--main-color);
+            border-color: var(--main-color);
+          }
+        }
+
+        li {
+          box-sizing: border-box;
+          font-weight: 400 !important;
+          background-color: transparent;
+          border: 1px solid var(--art-gray-300);
+          transition: all 0.2s ease-out;
+
+          &.is-active:not(.is-disabled) {
+            font-weight: 400;
+            color: var(--main-color);
+            border: 1px solid var(--main-color);
+          }
+
+          &:hover:not(.is-disabled) {
+            border-color: var(--main-color);
+          }
+        }
+      }
+    }
   }
 }
 
@@ -56,29 +96,5 @@
     gap: 15px 0;
     align-items: center;
     justify-content: center;
-
-    .el-pagination__sizes {
-      .el-select {
-        width: 100px !important;
-
-        .el-select__wrapper {
-          height: 30px !important;
-        }
-      }
-    }
-
-    .el-pager {
-      li {
-        margin-right: 2px;
-      }
-    }
-
-    .el-pagination__jump {
-      margin-left: 5px;
-
-      .el-input {
-        height: 32px !important;
-      }
-    }
   }
 }

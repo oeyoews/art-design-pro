@@ -59,6 +59,16 @@ export const asyncRoutes: AppRouteRecord[] = [
         }
       },
       {
+        path: 'treelist',
+        name: 'treelist',
+        component: RoutesAlias.WorkflowTree,
+        meta: {
+          title: "左右布局",
+          keepAlive: false,
+          fixedTab: false,
+        }
+      },
+      {
         path: 'basic',
         name: 'basic',
         component: RoutesAlias.WorkflowBasic,
