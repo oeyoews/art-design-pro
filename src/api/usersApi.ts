@@ -27,7 +27,7 @@ export class UserService {
       params
     })
   }
-  // 获取j角色表
+  // 获取角色表
   static getRoleList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({
       // url: '/api/user/list',
