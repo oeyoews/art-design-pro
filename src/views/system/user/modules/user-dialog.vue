@@ -6,16 +6,16 @@
     align-center
   >
     <ElForm ref="formRef" :model="formData" :rules="rules" label-width="80px">
-      <ElFormItem label="用户名" prop="username">
-        <ElInput v-model="formData.username" />
+      <ElFormItem label="用户名" prop="userName">
+        <ElInput v-model="formData.userName" />
       </ElFormItem>
-      <ElFormItem label="手机号" prop="phone">
-        <ElInput v-model="formData.phone" />
+      <ElFormItem label="手机号" prop="phonenumber">
+        <ElInput v-model="formData.phonenumber" />
       </ElFormItem>
-      <ElFormItem label="性别" prop="gender">
-        <ElSelect v-model="formData.gender">
-          <ElOption label="男" value="男" />
-          <ElOption label="女" value="女" />
+      <ElFormItem label="性别" prop="sex">
+        <ElSelect v-model="formData.sex">
+          <ElOption label="男" value="0" />
+          <ElOption label="女" value="1" />
         </ElSelect>
       </ElFormItem>
       <ElFormItem label="角色" prop="role">
@@ -39,9 +39,11 @@
 </template>
 
 <script setup lang="ts">
+  import { UserService } from '@/api/usersApi'
   import { ROLE_LIST_DATA } from '@/mock/temp/formData'
   import type { FormInstance, FormRules } from 'element-plus'
   import { ElMessage } from 'element-plus'
+  const { getUserList, delUser, editUser } = UserService
 
   interface Props {
     visible: boolean
@@ -73,37 +75,39 @@
 
   // 表单数据
   const formData = reactive({
-    username: '',
-    phone: '',
-    gender: '男',
+    userName: '',
+    phonenumber: '',
+    sex: "0",
     role: [] as string[]
   })
 
   // 表单验证规则
   const rules: FormRules = {
-    username: [
+    userName: [
       { required: true, message: '请输入用户名', trigger: 'blur' },
       { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
     ],
-    phone: [
+    phonenumber: [
       { required: true, message: '请输入手机号', trigger: 'blur' },
       { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的手机号格式', trigger: 'blur' }
     ],
-    gender: [{ required: true, message: '请选择性别', trigger: 'blur' }],
+    sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
     role: [{ required: true, message: '请选择角色', trigger: 'blur' }]
   }
 
   // 初始化表单数据
   const initFormData = () => {
-    const isEdit = props.type === 'edit' && props.userData
+    // const isEdit = props.type === 'edit' && props.userData
     const row = props.userData
 
-    Object.assign(formData, {
-      username: isEdit ? row.userName || '' : '',
-      phone: isEdit ? row.phonenumber || '' : '',
-      gender: isEdit ? row.userGender || '男' : '男',
-      role: isEdit ? (Array.isArray(row.userRoles) ? row.userRoles : []) : []
-    })
+    Object.assign(formData, row)
+    // Object.assign(formData, {
+    //   userId: isEdit ? row.userId : undefined,
+    //   userName: isEdit ? row.userName || '' : '',
+    //   phonenumber: isEdit ? row.phonenumber || '' : '',
+    //   sex: isEdit ? row.sex || '男' : '男',
+    //   role: isEdit ? (Array.isArray(row.userRoles) ? row.userRoles : []) : []
+    // })
   }
 
   // 统一监听对话框状态变化
@@ -126,9 +130,11 @@
 
     await formRef.value.validate((valid) => {
       if (valid) {
-        ElMessage.success(dialogType.value === 'add' ? '添加成功' : '更新成功')
-        dialogVisible.value = false
-        emit('submit')
+        editUser(formData).then(() => {
+          ElMessage.success('更新成功')
+          dialogVisible.value = false
+          emit('submit')
+        })
       }
     })
   }

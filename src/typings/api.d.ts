@@ -77,6 +77,7 @@ declare namespace Api {
     /** 用户列表项 */
     interface UserListItem {
       id: number
+      userId: number
       avatar: string
       createBy: string
       createTime: string

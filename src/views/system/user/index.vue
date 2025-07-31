@@ -51,7 +51,7 @@
 
   type UserListItem = Api.User.UserListItem
   const { width } = useWindowSize()
-  const { getUserList } = UserService
+  const { getUserList, delUser, editUser } = UserService
 
   // 弹窗相关
   const dialogType = ref<Form.DialogType>('add')
@@ -232,7 +232,10 @@
       cancelButtonText: '取消',
       type: 'error'
     }).then(() => {
-      ElMessage.success('注销成功')
+      delUser(row.userId).then(() => {
+        ElMessage.success('注销成功')
+        refreshAll()
+      })
     })
   }
 
@@ -243,6 +246,7 @@
     try {
       dialogVisible.value = false
       currentUserData.value = {}
+      refreshAll()
     } catch (error) {
       console.error('提交失败:', error)
     }

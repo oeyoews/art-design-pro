@@ -35,6 +35,20 @@ export class UserService {
       params
     })
   }
+
+  // 删除用户
+  static delUser(id: number) {
+    return request.del<Api.User.UserListData>({
+      url: "/api/system/user/" + id,
+    })
+  }
+  /** 更新用户信息 */
+  static editUser(data: any) {
+    return request.put<Api.User.UserListData>({
+      url: "/api/system/user",
+      data
+    })
+  }
   // test
   static getUserWorkflowList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({
