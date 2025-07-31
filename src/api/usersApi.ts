@@ -7,6 +7,10 @@ export class UserService {
       // url: '/api/auth/login',
       url: '/api/login',
       params
+      // 自定义请求头
+      // headers: {
+      //   'X-Custom-Header': 'your-custom-value'
+      // }
       // showErrorMessage: false // 不显示错误消息
     })
   }

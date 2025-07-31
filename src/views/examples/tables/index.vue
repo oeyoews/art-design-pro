@@ -17,8 +17,9 @@
       </template>
       <div class="intro-content">
         <p class="intro-text">
-          useTable 提供强大的组合式 API，集成数据获取、智能缓存（LRU算法）、防抖搜索、
-          多种刷新策略、错误处理、列配置管理、移动端适配等核心功能，全面提升表格开发效率
+          集成搜索、刷新、全屏、大小控制、列显示隐藏、拖拽排序、表格样式控制、并内置 useTable
+          组合式函数，提供强大的组合式 API，集成数据获取、智能缓存（LRU算法）、
+          多种刷新策略等核心功能，全面提升表格开发效率。
         </p>
 
         <!-- 调试面板 -->
@@ -154,33 +155,32 @@
         fullClass="art-table-card"
       >
         <template #left>
-          <div class="toolbar-left">
-            <ElButton type="primary" @click="handleAdd" v-ripple>
-              <ElIcon><Plus /></ElIcon>
-              新增用户
-            </ElButton>
+          <ElButton type="primary" @click="handleAdd" v-ripple>
+            <ElIcon><Plus /></ElIcon>
+            新增用户
+          </ElButton>
 
-            <!-- 导出导入功能 -->
-            <ArtExcelExport
-              :data="tableData as any"
-              :columns="exportColumns as any"
-              filename="用户数据"
-              :auto-index="true"
-              button-text="导出"
-              @export-success="handleExportSuccess"
-            />
-            <ArtExcelImport
-              @import-success="handleImportSuccess"
-              @import-error="handleImportError"
-            />
+          <!-- 导出导入功能 -->
+          <ArtExcelExport
+            :data="tableData as any"
+            :columns="exportColumns as any"
+            filename="用户数据"
+            :auto-index="true"
+            button-text="导出"
+            @export-success="handleExportSuccess"
+          />
+          <ArtExcelImport
+            @import-success="handleImportSuccess"
+            @import-error="handleImportError"
+            style="margin: 0 12px"
+          />
 
-            <ElButton @click="handleClearData" plain v-ripple> 清空数据 </ElButton>
+          <ElButton @click="handleClearData" plain v-ripple> 清空数据 </ElButton>
 
-            <ElButton @click="handleBatchDelete" :disabled="selectedRows.length === 0" v-ripple>
-              <ElIcon><Delete /></ElIcon>
-              批量删除 ({{ selectedRows.length }})
-            </ElButton>
-          </div>
+          <ElButton @click="handleBatchDelete" :disabled="selectedRows.length === 0" v-ripple>
+            <ElIcon><Delete /></ElIcon>
+            批量删除 ({{ selectedRows.length }})
+          </ElButton>
         </template>
       </ArtTableHeader>
 
@@ -412,16 +412,16 @@
   })
 
   // 表单搜索初始值
-  const defaultFilter = {
+  const defaultFilter = ref({
     name: 'jack',
     phone: '',
     status: '1',
     department: '',
     dateRange: ['2025-01-01', '2025-02-10']
-  }
+  })
 
   // 搜索表单状态
-  const searchFormState = ref({ ...defaultFilter })
+  const searchFormState = ref({ ...defaultFilter.value })
 
   // 用户状态配置
   const USER_STATUS_CONFIG = {
@@ -590,6 +590,21 @@
       // },
       immediate: true,
       columnsFactory: () => [
+        // {
+        //   type: 'expand',
+        //   label: '展开行',
+        //   width: 80,
+        //   formatter: (row) =>
+        //     h('div', { style: 'padding: 10px 30px' }, [
+        //       h('p', {}, '用户ID: ' + row.id),
+        //       h('p', {}, '用户名: ' + row.userName),
+        //       h('p', {}, '手机号: ' + row.userPhone),
+        //       h('p', {}, '邮箱: ' + row.userEmail),
+        //       h('p', {}, '性别: ' + row.userGender),
+        //       h('p', {}, '状态: ' + row.status),
+        //       h('p', {}, '创建日期: ' + row.createTime)
+        //     ])
+        // },
         { type: 'selection', width: 50 },
         // { type: 'index', width: 60, label: '序号' }, // 本地序号列
         { type: 'globalIndex', width: 60, label: '序号' }, // 全局序号列
@@ -600,6 +615,7 @@
           useSlot: true,
           useHeaderSlot: true,
           sortable: false
+          // checked: false, // 隐藏列
         },
         {
           prop: 'userGender',
@@ -824,7 +840,7 @@
   const handleReset = () => {
     addCacheLog('🔄 重置搜索')
     // 重置搜索表单状态
-    searchFormState.value = { ...defaultFilter }
+    searchFormState.value = { ...defaultFilter.value }
     resetSearch()
   }
 
@@ -1122,32 +1138,44 @@
         }
       }
 
-      .toolbar-left {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-
-        .table-actions {
-          margin-left: 8px;
-        }
-      }
-
       .user-info {
         display: flex;
         gap: 12px;
         align-items: center;
 
+        .el-avatar {
+          flex-shrink: 0;
+          width: 40px !important;
+          height: 40px !important;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+
         .user-details {
+          flex: 1;
+          min-width: 0;
+
           .user-name {
             margin: 0;
+            overflow: hidden;
             font-weight: 500;
             color: var(--el-text-color-primary);
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
 
           .user-email {
             margin: 4px 0 0;
+            overflow: hidden;
             font-size: 12px;
             color: var(--el-text-color-regular);
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
@@ -1285,16 +1313,6 @@
 
         .intro-badges {
           width: 100%;
-        }
-      }
-
-      .art-table-card .toolbar-left {
-        flex-direction: column;
-        gap: 8px;
-        align-items: flex-start;
-
-        .table-actions {
-          margin-left: 0;
         }
       }
 
