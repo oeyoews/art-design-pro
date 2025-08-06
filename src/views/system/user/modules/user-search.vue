@@ -51,7 +51,7 @@
   // --- 表单配置项 ---
   const formItems: SearchFormItem[] = [
     {
-      label: '用户名',
+      label: '用户名称',
       prop: 'userName',
       type: 'input',
       config: {
@@ -60,7 +60,7 @@
       onChange: handleFormChange
     },
     {
-      label: '电话',
+      label: '手机号码',
       prop: 'phonenumber',
       type: 'input',
       config: {
@@ -68,23 +68,23 @@
       },
       onChange: handleFormChange
     },
-    {
-      label: '邮箱',
-      prop: 'email',
-      type: 'input',
-      config: {
-        clearable: true
-      },
-      onChange: handleFormChange
-    },
+    // {
+    //   label: '邮箱',
+    //   prop: 'email',
+    //   type: 'input',
+    //   config: {
+    //     clearable: true
+    //   },
+    //   onChange: handleFormChange
+    // },
     {
       prop: 'daterange',
-      label: '日期范围',
+      label: '创建时间',
       type: 'daterange',
       config: {
         type: 'daterange',
-        startPlaceholder: '开始时间',
-        endPlaceholder: '结束时间'
+        startPlaceholder: '开始日期',
+        endPlaceholder: '结束日期'
       }
     },
     {

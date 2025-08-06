@@ -46,6 +46,23 @@ export class UserService {
       url: "/api/system/user/" + id,
     })
   }
+
+  /** 查询用户信息 */
+  static getUser(id: string) {
+    return request.get<Api.User.UserListData>({
+      url: "/api/system/user/"+id,
+    })
+  }
+
+  /** 更新用户信息 */
+  static addUser(data: any) {
+    return request.post<Api.User.UserListData>({
+      url: "/api/system/user",
+      data
+    })
+  }
+
+
   /** 更新用户信息 */
   static editUser(data: any) {
     return request.put<Api.User.UserListData>({
@@ -53,6 +70,7 @@ export class UserService {
       data
     })
   }
+
   // test
   static getUserWorkflowList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({

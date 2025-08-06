@@ -65,17 +65,17 @@
   const defaultFilter = {
     name: undefined,
     // level: 'normal',
-    date: '2025-01-05',
+    date: '2025-01-05'
     // daterange: ['2025-01-01', '2025-02-10'],
     // status: '0'
   }
 
   // 用户状态配置
   const USER_STATUS_CONFIG = {
-    '1': { type: 'success' as const, text: '在线' },
-    '2': { type: 'info' as const, text: '离线' },
-    '3': { type: 'warning' as const, text: '异常' },
-    '4': { type: 'danger' as const, text: '注销' }
+    0: { type: 'success' as const, text: '在线' },
+    1: { type: 'info' as const, text: '离线' },
+    3: { type: 'warning' as const, text: '异常' },
+    4: { type: 'danger' as const, text: '注销' }
   } as const
 
   /**
@@ -83,9 +83,9 @@
    */
   const getUserStatusConfig = (status: string) => {
     return (
-      USER_STATUS_CONFIG[status as keyof typeof USER_STATUS_CONFIG] || {
+      USER_STATUS_CONFIG[Number(status) as keyof typeof USER_STATUS_CONFIG] || {
         type: 'info' as const,
-        text: '未知'
+        text: '离线'
       }
     )
   }
@@ -120,29 +120,33 @@
       },
       columnsFactory: () => [
         { type: 'selection' }, // 勾选列
-        { type: 'index', width: 60, label: '序号' }, // 序号
+        // { type: 'index', width: 60, label: '序号' }, // 序号
+        { prop: 'userId', width: 80, label: '用户编号' }, // 序号
         // { type: 'expand' }, // 展开列
         {
           prop: 'avatar',
-          label: '用户名',
+          label: '用户名称',
           minWidth: width.value < 500 ? 220 : '',
           formatter: (row) => {
             return h('div', { class: 'user', style: 'display: flex; align-items: center' }, [
               h('img', { class: 'avatar', src: row.avatar }),
               h('div', {}, [
-                h('p', { class: 'user-name' }, row.userName),
-                h('p', { class: 'email' }, row.userEmail)
+                h('p', { class: 'user-name' }, row.userName)
+                // h('p', { class: 'email' }, row.userEmail)
               ])
             ])
           }
         },
+        { prop: 'nickName', label: '用户昵称' },
+        // todo
+        // { prop: 'deptId', label: '部门' },
         {
           prop: 'sex',
           label: '性别',
-          sortable: true,
-          formatter: (row) => (row.sex == "0" ? '男' : '女')
+          // sortable: true,
+          formatter: (row) => (row.sex == '0' ? '男' : '女')
         },
-        { prop: 'phonenumber', label: '手机号' },
+        { prop: 'phonenumber', label: '手机号码' },
         {
           prop: 'status',
           label: '状态',
@@ -153,8 +157,8 @@
         },
         {
           prop: 'createTime',
-          label: '创建日期',
-          sortable: true
+          label: '创建时间'
+          // sortable: true
         },
         {
           prop: 'operation',
@@ -162,6 +166,8 @@
           width: 120,
           fixed: 'right', // 固定列
           formatter: (row) =>
+            // 禁止管理员修改自身数据
+            row.userName != 'admin' &&
             h('div', [
               h(ArtButtonTable, {
                 type: 'edit',
@@ -265,9 +271,9 @@
   .user-page {
     :deep(.user) {
       .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 6px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
       }
 
       > div {
