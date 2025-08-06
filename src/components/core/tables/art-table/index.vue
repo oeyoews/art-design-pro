@@ -56,7 +56,7 @@
     </ElTable>
 
     <div
-      class="pagination"
+      class="pagination custom-pagination"
       v-if="showPagination"
       :class="mergedPaginationOptions?.align"
       ref="paginationRef"
@@ -81,10 +81,11 @@
   import { ColumnOption } from '@/types'
   import { useTableStore } from '@/store/modules/table'
   import { useCommon } from '@/composables/useCommon'
-  import { useElementSize } from '@vueuse/core'
+  import { useElementSize, useWindowSize } from '@vueuse/core'
 
   defineOptions({ name: 'ArtTable' })
 
+  const { width } = useWindowSize()
   const elTableRef = ref<InstanceType<typeof ElTable> | null>(null)
   const paginationRef = ref<HTMLElement>()
   const tableStore = useTableStore()
@@ -114,6 +115,8 @@
     hideOnSinglePage?: boolean
     /** 分页器的大小 */
     size?: 'small' | 'default' | 'large'
+    /** 分页器的页码数量 */
+    pagerCount?: number
   }
 
   /** ArtTable 组件的 Props 接口 */
@@ -146,14 +149,31 @@
     showTableHeader: true
   })
 
+  const LAYOUT = {
+    MOBILE: 'prev, pager, next, sizes, jumper, total',
+    IPAD: 'prev, pager, next, jumper, total',
+    DESKTOP: 'total, prev, pager, next, sizes, jumper'
+  }
+
+  const layout = computed(() => {
+    if (width.value < 768) {
+      return LAYOUT.MOBILE
+    } else if (width.value < 1024) {
+      return LAYOUT.IPAD
+    } else {
+      return LAYOUT.DESKTOP
+    }
+  })
+
   // 默认分页常量
   const DEFAULT_PAGINATION_OPTIONS: PaginationOptions = {
     pageSizes: [10, 20, 30, 50, 100],
     align: 'center',
     background: true,
-    layout: 'total, sizes, prev, pager, next, jumper',
+    layout: layout.value,
     hideOnSinglePage: false,
-    size: 'default'
+    size: 'default',
+    pagerCount: width.value > 1200 ? 7 : 5
   }
 
   // 合并分页配置
@@ -177,9 +197,9 @@
   const containerHeight = computed(() => {
     let offset = 0
     if (!props.showTableHeader) {
-      offset = paginationHeight.value === 0 ? 0 : 55
+      offset = paginationHeight.value === 0 ? 0 : 45
     } else {
-      offset = paginationHeight.value === 0 ? 30 : 90
+      offset = paginationHeight.value === 0 ? 25 : 84
     }
     return { height: offset === 0 ? '100%' : `calc(100% - ${offset}px)` }
   })
@@ -256,5 +276,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @use './style.scss';
+  @use './style';
 </style>
