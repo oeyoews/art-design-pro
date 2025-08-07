@@ -242,6 +242,7 @@
       // 存储token和用户信息
       userStore.setToken(token, refreshToken)
       const userInfo = await UserService.getUserInfo()
+      // 缓存用户信息
       userStore.setUserInfo(userInfo)
       userStore.setLoginStatus(true)
 

@@ -196,7 +196,7 @@
     sex: [{ required: true, message: '请选择性别', trigger: 'blur' }]
   })
 
-  const lableList: Array<string> = ['专注设计', '很有想法', '海纳百川']
+  // const lableList: Array<string> = ['专注设计', '很有想法', '海纳百川']
 
   onMounted(() => {
     getProfileData();
@@ -212,8 +212,7 @@
 
   const getProfileData  = async () => {
     const res = await UserService.getProfile();
-    Object.assign(form, res)
-    console.log(res);
+    Object.assign(form, res.data)
   }
 
   const handleProfileForm = async () => {

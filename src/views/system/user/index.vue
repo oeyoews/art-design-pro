@@ -46,13 +46,13 @@
   import { UserService } from '@/api/usersApi'
   import UserSearch from './modules/user-search.vue'
   import UserDialog from './modules/user-dialog.vue'
-import { USER_STATUS_CONFIG } from '@/utils/constants/system'
+  import { USER_STATUS_CONFIG } from '@/utils/constants/system'
 
   defineOptions({ name: 'User' })
 
   type UserListItem = Api.User.UserListItem
   const { width } = useWindowSize()
-  const { getUserList, delUser, editUser } = UserService
+  const { getUserList, delUser } = UserService
 
   // 弹窗相关
   const dialogType = ref<Form.DialogType>('add')

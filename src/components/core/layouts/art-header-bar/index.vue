@@ -138,14 +138,17 @@
             popper-style="border: 1px solid var(--art-border-dashed-color); border-radius: calc(var(--custom-radius) / 2 + 4px); padding: 5px 16px; 5px 16px;"
           >
             <template #reference>
-              <img class="cover" src="@imgs/user/avatar.webp" alt="avatar" />
+              <div style="display: flex; align-items: center;gap: 5px;">
+                {{ userInfo.user?.userName }}
+                <img class="cover" src="@imgs/user/avatar.webp" alt="avatar" />
+              </div>
             </template>
             <template #default>
               <div class="user-menu-box">
                 <div class="user-head">
                   <img class="cover" src="@imgs/user/avatar.webp" style="float: left" />
                   <div class="user-wrap">
-                    <span class="name">{{ userInfo.userName }}</span>
+                    <span class="name">{{ userInfo.user?.userName }}</span>
                     <span class="email">admin@gmail.com</span>
                   </div>
                 </div>
