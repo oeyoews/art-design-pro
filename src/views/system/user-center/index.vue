@@ -65,7 +65,7 @@
               <ElFormItem label="性别" prop="sex" class="right-input">
                 <ElSelect v-model="form.sex" placeholder="Select" :disabled="!isEdit">
                   <ElOption
-                    v-for="item in options"
+                    v-for="item in sexOptions"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
@@ -152,6 +152,7 @@
   import { ElForm, FormInstance, FormRules } from 'element-plus'
 
   import { UserService } from '@/api/usersApi'
+  import { sexOptions } from '@/utils/constants/system'
 
   defineOptions({ name: 'UserCenter' })
 
@@ -160,15 +161,15 @@
 
   const isEdit = ref(false)
   const isEditPwd = ref(false)
-  const date = ref('')
+  // const date = ref('')
   const form = reactive({
     realName: 'John Snow',
     nikeName: '皮卡丘',
     email: '59301283@mall.com',
     mobile: '18888888888',
     address: '广东省深圳市宝安区西乡街道101栋201',
-    sex: '2',
-    des: 'Art Design Pro 是一款漂亮的后台管理系统模版.'
+    sex: '0',
+    des: ''
   })
 
   const pwdForm = reactive({
@@ -193,17 +194,6 @@
     address: [{ required: true, message: '请输入地址', trigger: 'blur' }],
     sex: [{ required: true, message: '请选择性别', trigger: 'blur' }]
   })
-
-  const options = [
-    {
-      value: '1',
-      label: '男'
-    },
-    {
-      value: '2',
-      label: '女'
-    }
-  ]
 
   const lableList: Array<string> = ['专注设计', '很有想法', '海纳百川']
 

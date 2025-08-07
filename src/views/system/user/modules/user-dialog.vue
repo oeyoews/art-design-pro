@@ -20,8 +20,12 @@
       </ElFormItem>
       <ElFormItem label="性别" prop="sex">
         <ElSelect v-model="formData.sex">
-          <ElOption label="男" value="0" />
-          <ElOption label="女" value="1" />
+          <ElOption
+            v-for="item in sexOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
         </ElSelect>
       </ElFormItem>
       <ElFormItem label="角色" prop="role">
@@ -47,6 +51,7 @@
 <script setup lang="ts">
   import { UserService } from '@/api/usersApi'
   import { ROLE_LIST_DATA } from '@/mock/temp/formData'
+import { sexOptions } from '@/utils/constants/system'
   import type { FormInstance, FormRules } from 'element-plus'
   import { ElMessage } from 'element-plus'
   const { getUserList, delUser, getUser, addUser, editUser } = UserService
