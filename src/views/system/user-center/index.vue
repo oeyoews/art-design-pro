@@ -6,7 +6,7 @@
           <img class="bg" src="@imgs/user/bg.webp" />
           <img class="avatar" src="@imgs/user/avatar.webp" />
           <h2 class="name">{{ userInfo.userName }}</h2>
-          <p class="des">Art Design Pro 是一款漂亮的后台管理系统模版.</p>
+          <p class="des">后台管理系统模版</p>
 
           <div class="outer-info">
             <div>
@@ -53,7 +53,7 @@
           <ElForm
             :model="form"
             class="form"
-            ref="ruleFormRef"
+            ref="formRef"
             :rules="rules"
             label-width="86px"
             label-position="top"
@@ -97,7 +97,7 @@
             </ElFormItem>
 
             <div class="el-form-item-right">
-              <ElButton type="primary" style="width: 90px" v-ripple @click="edit">
+              <ElButton type="primary" style="width: 90px" v-ripple @click="handleProfileForm">
                 {{ isEdit ? '保存' : '编辑' }}
               </ElButton>
             </div>
@@ -151,6 +151,8 @@
   import { useUserStore } from '@/store/modules/user'
   import { ElForm, FormInstance, FormRules } from 'element-plus'
 
+  import { UserService } from '@/api/usersApi'
+
   defineOptions({ name: 'UserCenter' })
 
   const userStore = useUserStore()
@@ -175,7 +177,7 @@
     confirmPassword: '123456'
   })
 
-  const ruleFormRef = ref<FormInstance>()
+  const formRef = ref<FormInstance>()
 
   const rules = reactive<FormRules>({
     realName: [
@@ -189,7 +191,7 @@
     email: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
     mobile: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
     address: [{ required: true, message: '请输入地址', trigger: 'blur' }],
-    sex: [{ type: 'array', required: true, message: '请选择性别', trigger: 'blur' }]
+    sex: [{ required: true, message: '请选择性别', trigger: 'blur' }]
   })
 
   const options = [
@@ -203,36 +205,28 @@
     }
   ]
 
-  const lableList: Array<string> = ['专注设计', '很有想法', '辣~', '大长腿', '川妹子', '海纳百川']
+  const lableList: Array<string> = ['专注设计', '很有想法', '海纳百川']
 
   onMounted(() => {
-    getDate()
+    getProfileData();
   })
 
-  const getDate = () => {
-    const d = new Date()
-    const h = d.getHours()
-    let text = ''
-
-    if (h >= 6 && h < 9) {
-      text = '早上好'
-    } else if (h >= 9 && h < 11) {
-      text = '上午好'
-    } else if (h >= 11 && h < 13) {
-      text = '中午好'
-    } else if (h >= 13 && h < 18) {
-      text = '下午好'
-    } else if (h >= 18 && h < 24) {
-      text = '晚上好'
-    } else if (h >= 0 && h < 6) {
-      text = '很晚了，早点睡'
-    }
-
-    date.value = text
+  const getProfileData  = async () => {
+    const res = await UserService.getProfile();
+    console.log(res);
   }
 
-  const edit = () => {
-    isEdit.value = !isEdit.value
+  const handleProfileForm = async () => {
+    if(!isEdit.value) {
+      isEdit.value = true;
+      return;
+    }
+    if (!formRef.value) return
+    await formRef.value.validate((valid) => {
+      if (valid) {
+        isEdit.value = false;
+      }
+    })
   }
 
   const editPwd = () => {

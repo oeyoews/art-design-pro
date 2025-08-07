@@ -71,6 +71,14 @@ export class UserService {
     })
   }
 
+  /** 获取当前用户信息 */
+  static getProfile() {
+    return request.get<Api.User.UserListData>({
+      url: "/api/system/user/profile",
+    })
+  }
+
+
   // test
   static getUserWorkflowList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({
