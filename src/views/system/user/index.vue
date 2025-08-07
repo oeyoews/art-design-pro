@@ -62,13 +62,13 @@
   const selectedRows = ref<UserListItem[]>([])
 
   // 表单搜索初始值
-  const defaultFilter = {
+  const defaultFilter = ref({
     name: undefined,
     // level: 'normal',
     date: '2025-01-05'
     // daterange: ['2025-01-01', '2025-02-10'],
     // status: '0'
-  }
+  })
 
   // 用户状态配置
   const USER_STATUS_CONFIG = {
