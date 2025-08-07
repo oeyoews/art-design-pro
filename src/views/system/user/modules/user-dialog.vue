@@ -9,16 +9,16 @@
       <ElFormItem label="用户昵称" prop="nickName">
         <ElInput v-model="formData.nickName" />
       </ElFormItem>
-      <ElFormItem label="用户名称" prop="userName">
+      <!-- <ElFormItem label="用户名称" prop="userName">
         <ElInput v-model="formData.userName" />
-      </ElFormItem>
+      </ElFormItem> -->
       <ElFormItem label="手机号" prop="phonenumber">
         <ElInput v-model="formData.phonenumber" />
       </ElFormItem>
-      <ElFormItem label="密码" prop="password">
+      <!-- <ElFormItem label="密码" prop="password">
         <ElInput type="password" v-model="formData.password" />
-      </ElFormItem>
-      <ElFormItem label="性别" prop="sex">
+      </ElFormItem> -->
+      <ElFormItem label="用户性别" prop="sex">
         <ElSelect v-model="formData.sex">
           <ElOption
             v-for="item in sexOptions"
@@ -87,11 +87,11 @@ import { sexOptions } from '@/utils/constants/system'
 
   const defaultFormValues = {
     nickName: '',
-    userName: '',
+    // userName: '',
     phonenumber: '',
     sex: '0',
     role: [] as string[],
-    password: 123456
+    // password: 123456
   }
 
   // 表单数据
@@ -99,10 +99,10 @@ import { sexOptions } from '@/utils/constants/system'
 
   // 表单验证规则
   const rules: FormRules = {
-    userName: [
-      { required: true, message: '请输入用户名称', trigger: 'blur' },
-      { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
-    ],
+    // userName: [
+    //   { required: true, message: '请输入用户名称', trigger: 'blur' },
+    //   { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+    // ],
     nickName: [
       { required: true, message: '请输入用户昵称', trigger: 'blur' },
       { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
@@ -122,9 +122,8 @@ import { sexOptions } from '@/utils/constants/system'
 
     // 编辑：请求接口获取表单数据
     if (isEdit.value) {
-      console.log(99999999)
       getUser(row.userId).then((res) => {
-        Object.assign(formData, res)
+        Object.assign(formData, res.data)
       })
     } else {
     // 新增：重置表单数据
