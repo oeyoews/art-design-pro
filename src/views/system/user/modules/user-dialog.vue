@@ -9,15 +9,15 @@
       <ElFormItem label="用户昵称" prop="nickName">
         <ElInput v-model="formData.nickName" />
       </ElFormItem>
-      <!-- <ElFormItem label="用户名称" prop="userName">
+      <ElFormItem label="用户名称" prop="userName" v-if="!isEdit">
         <ElInput v-model="formData.userName" />
-      </ElFormItem> -->
+      </ElFormItem>
       <ElFormItem label="手机号" prop="phonenumber">
         <ElInput v-model="formData.phonenumber" />
       </ElFormItem>
-      <!-- <ElFormItem label="密码" prop="password">
+      <ElFormItem label="密码" prop="password" v-if="!isEdit">
         <ElInput type="password" v-model="formData.password" />
-      </ElFormItem> -->
+      </ElFormItem>
       <ElFormItem label="用户性别" prop="sex">
         <ElSelect v-model="formData.sex">
           <ElOption
@@ -51,7 +51,7 @@
 <script setup lang="ts">
   import { UserService } from '@/api/usersApi'
   import { ROLE_LIST_DATA } from '@/mock/temp/formData'
-import { sexOptions } from '@/utils/constants/system'
+  import { sexOptions } from '@/utils/constants/system'
   import type { FormInstance, FormRules } from 'element-plus'
   import { ElMessage } from 'element-plus'
   const { getUserList, delUser, getUser, addUser, editUser } = UserService
@@ -87,11 +87,11 @@ import { sexOptions } from '@/utils/constants/system'
 
   const defaultFormValues = {
     nickName: '',
-    // userName: '',
+    userName: '',
     phonenumber: '',
     sex: '0',
     role: [] as string[],
-    // password: 123456
+    password: 123456
   }
 
   // 表单数据
@@ -99,10 +99,10 @@ import { sexOptions } from '@/utils/constants/system'
 
   // 表单验证规则
   const rules: FormRules = {
-    // userName: [
-    //   { required: true, message: '请输入用户名称', trigger: 'blur' },
-    //   { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
-    // ],
+    userName: [
+      { required: true, message: '请输入用户名称', trigger: 'blur' },
+      { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+    ],
     nickName: [
       { required: true, message: '请输入用户昵称', trigger: 'blur' },
       { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
@@ -110,6 +110,9 @@ import { sexOptions } from '@/utils/constants/system'
     phonenumber: [
       { required: true, message: '请输入手机号', trigger: 'blur' },
       { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的手机号格式', trigger: 'blur' }
+    ],
+    password: [
+      { required: true, message: '请输入初始密码', trigger: 'blur' },
     ]
     // sex: [{ required: true, message: '请选择性别', trigger: 'blur' }]
     // role: [{ required: true, message: '请选择角色', trigger: 'blur' }]

@@ -109,7 +109,7 @@
       apiParams: {
         current: 1,
         size: 20,
-        ...defaultFilter,
+        ...defaultFilter.value,
         pageNum: 1,
         pageSize: 20
       },
