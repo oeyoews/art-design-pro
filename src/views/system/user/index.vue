@@ -46,6 +46,7 @@
   import { UserService } from '@/api/usersApi'
   import UserSearch from './modules/user-search.vue'
   import UserDialog from './modules/user-dialog.vue'
+import { USER_STATUS_CONFIG } from '@/utils/constants/system'
 
   defineOptions({ name: 'User' })
 
@@ -70,14 +71,6 @@
     // status: '0'
   })
 
-  // 用户状态配置
-  const USER_STATUS_CONFIG = {
-    0: { type: 'success' as const, text: '在线' },
-    1: { type: 'info' as const, text: '离线' },
-    3: { type: 'warning' as const, text: '异常' },
-    4: { type: 'danger' as const, text: '注销' }
-  } as const
-
   /**
    * 获取用户状态配置
    */
@@ -85,7 +78,7 @@
     return (
       USER_STATUS_CONFIG[Number(status) as keyof typeof USER_STATUS_CONFIG] || {
         type: 'info' as const,
-        text: '离线'
+        text: ''
       }
     )
   }

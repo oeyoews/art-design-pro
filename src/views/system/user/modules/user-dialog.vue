@@ -15,8 +15,16 @@
       <ElFormItem label="手机号" prop="phonenumber">
         <ElInput v-model="formData.phonenumber" />
       </ElFormItem>
-      <ElFormItem label="密码" prop="password" v-if="!isEdit">
+      <ElFormItem label="用户密码" prop="password" v-if="!isEdit">
         <ElInput type="password" v-model="formData.password" />
+      </ElFormItem>
+      <ElFormItem label="状态" prop="status" >
+        <ElRadioGroup v-model="formData.status">
+          <ElRadio v-for="(item, key) in USER_STATUS_CONFIG" :key="key" :label="item.text" :value="key">
+          </ElRadio>
+          <!-- <ElRadio label="0">正常</ElRadio>
+          <ElRadio label="1">停用</ElRadio> -->
+        </ElRadioGroup>
       </ElFormItem>
       <ElFormItem label="用户性别" prop="sex">
         <ElSelect v-model="formData.sex">
@@ -51,7 +59,7 @@
 <script setup lang="ts">
   import { UserService } from '@/api/usersApi'
   import { ROLE_LIST_DATA } from '@/mock/temp/formData'
-  import { sexOptions } from '@/utils/constants/system'
+  import { sexOptions, USER_STATUS_CONFIG } from '@/utils/constants/system'
   import type { FormInstance, FormRules } from 'element-plus'
   import { ElMessage } from 'element-plus'
   const { getUserList, delUser, getUser, addUser, editUser } = UserService
@@ -89,6 +97,7 @@
     nickName: '',
     userName: '',
     phonenumber: '',
+    status: '0', // 用户账号状态
     sex: '0',
     role: [] as string[],
     password: 123456
