@@ -13,28 +13,28 @@
               <i class="iconfont-sys">&#xe72e;</i>
               <span>jdkjjfnndf@mall.com</span>
             </div>
-            <div>
+            <!-- <div>
               <i class="iconfont-sys">&#xe608;</i>
               <span>交互专家</span>
-            </div>
+            </div> -->
             <div>
               <i class="iconfont-sys">&#xe736;</i>
               <span>广东省深圳市</span>
             </div>
-            <div>
+            <!-- <div>
               <i class="iconfont-sys">&#xe811;</i>
               <span>字节跳动－某某平台部－UED</span>
-            </div>
+            </div> -->
           </div>
 
-          <div class="lables">
+          <!-- <div class="lables">
             <h3>标签</h3>
             <div>
               <div v-for="item in lableList" :key="item">
                 {{ item }}
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <!-- <el-carousel class="gallery" height="160px"
@@ -58,9 +58,11 @@
             label-width="86px"
             label-position="top"
           >
+
             <ElRow>
-              <ElFormItem label="姓名" prop="realName">
-                <el-input v-model="form.realName" :disabled="!isEdit" />
+              <ElFormItem label="用户姓名" prop="userName">
+                <!-- userName 禁止修改 -->
+                <el-input v-model="form.userName" :disabled="true" />
               </ElFormItem>
               <ElFormItem label="性别" prop="sex" class="right-input">
                 <ElSelect v-model="form.sex" placeholder="Select" :disabled="!isEdit">
@@ -75,8 +77,8 @@
             </ElRow>
 
             <ElRow>
-              <ElFormItem label="昵称" prop="nikeName">
-                <ElInput v-model="form.nikeName" :disabled="!isEdit" />
+              <ElFormItem label="用户昵称" prop="nickName">
+                <ElInput v-model="form.nickName" :disabled="!isEdit" />
               </ElFormItem>
               <ElFormItem label="邮箱" prop="email" class="right-input">
                 <ElInput v-model="form.email" :disabled="!isEdit" />
@@ -84,19 +86,22 @@
             </ElRow>
 
             <ElRow>
-              <ElFormItem label="手机" prop="mobile">
-                <ElInput v-model="form.mobile" :disabled="!isEdit" />
+              <ElFormItem label="手机" prop="phonenumber">
+                <ElInput v-model="form.phonenumber" :disabled="!isEdit" />
               </ElFormItem>
-              <ElFormItem label="地址" prop="address" class="right-input">
+              <!-- <ElFormItem label="地址" prop="address" class="right-input">
                 <ElInput v-model="form.address" :disabled="!isEdit" />
-              </ElFormItem>
+              </ElFormItem> -->
             </ElRow>
 
-            <ElFormItem label="个人介绍" prop="des" :style="{ height: '130px' }">
+            <!-- <ElFormItem label="个人介绍" prop="des" :style="{ height: '130px' }">
               <ElInput type="textarea" :rows="4" v-model="form.des" :disabled="!isEdit" />
-            </ElFormItem>
+            </ElFormItem> -->
 
             <div class="el-form-item-right">
+              <ElButton type="info" style="width: 90px" v-ripple @click="cancelEdit" v-if="isEdit">
+                取消
+              </ElButton>
               <ElButton type="primary" style="width: 90px" v-ripple @click="handleProfileForm">
                 {{ isEdit ? '保存' : '编辑' }}
               </ElButton>
@@ -149,7 +154,7 @@
 
 <script setup lang="ts">
   import { useUserStore } from '@/store/modules/user'
-  import { ElForm, FormInstance, FormRules } from 'element-plus'
+  import { ElForm, ElMessage, FormInstance, FormRules } from 'element-plus'
 
   import { UserService } from '@/api/usersApi'
   import { sexOptions } from '@/utils/constants/system'
@@ -163,12 +168,12 @@
   const isEditPwd = ref(false)
   // const date = ref('')
   const form = reactive({
-    realName: 'John Snow',
-    nikeName: '皮卡丘',
-    email: '59301283@mall.com',
-    mobile: '18888888888',
-    address: '广东省深圳市宝安区西乡街道101栋201',
-    sex: '0',
+    userName: '',
+    nickName: '',
+    email: '',
+    phonenumber: '',
+    address: '',
+    sex: '',
     des: ''
   })
 
@@ -181,11 +186,7 @@
   const formRef = ref<FormInstance>()
 
   const rules = reactive<FormRules>({
-    realName: [
-      { required: true, message: '请输入昵称', trigger: 'blur' },
-      { min: 2, max: 50, message: '长度在 2 到 30 个字符', trigger: 'blur' }
-    ],
-    nikeName: [
+    nickName: [
       { required: true, message: '请输入昵称', trigger: 'blur' },
       { min: 2, max: 50, message: '长度在 2 到 30 个字符', trigger: 'blur' }
     ],
@@ -201,8 +202,17 @@
     getProfileData();
   })
 
+  const cancelEdit = () => {
+    isEdit.value = false;
+    // 取消编辑时清除校验
+    formRef.value?.clearValidate();
+    // 重新获取数据(不采取缓存旧数据)
+    getProfileData();
+  }
+
   const getProfileData  = async () => {
     const res = await UserService.getProfile();
+    Object.assign(form, res)
     console.log(res);
   }
 
@@ -215,6 +225,9 @@
     await formRef.value.validate((valid) => {
       if (valid) {
         isEdit.value = false;
+        UserService.updateProfile(form).then(() => {
+          ElMessage.success('更新成功')
+        })
       }
     })
   }

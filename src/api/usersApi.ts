@@ -78,6 +78,15 @@ export class UserService {
     })
   }
 
+  /** 获取当前用户信息 */
+  static updateProfile(data:any) {
+    return request.put<Api.User.UserListData>({
+      url: "/api/system/user/profile",
+      data
+    })
+  }
+
+
 
   // test
   static getUserWorkflowList(params: Api.Common.PaginatingSearchParams) {
