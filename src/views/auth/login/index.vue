@@ -3,7 +3,7 @@
     <LoginLeftView></LoginLeftView>
 
     <div class="right-wrap">
-      <div class="top-right-wrap">
+      <!-- <div class="top-right-wrap" hidden>
         <div class="btn theme-btn" @click="toggleTheme">
           <i class="iconfont-sys">
             {{ isDark ? '&#xe6b5;' : '&#xe725;' }}
@@ -27,7 +27,7 @@
             </ElDropdownMenu>
           </template>
         </ElDropdown>
-      </div>
+      </div> -->
       <div class="header">
         <ArtLogo class="icon" />
         <h1>{{ systemName }}</h1>
@@ -43,7 +43,7 @@
             @keyup.enter="handleSubmit"
             style="margin-top: 25px"
           >
-            <ElFormItem prop="account">
+            <!-- <ElFormItem prop="account">
               <ElSelect v-model="formData.account" @change="setupAccount" class="account-select">
                 <ElOption
                   v-for="account in accounts"
@@ -54,7 +54,7 @@
                   <span>{{ account.label }}</span>
                 </ElOption>
               </ElSelect>
-            </ElFormItem>
+            </ElFormItem> -->
             <ElFormItem prop="username">
               <ElInput :placeholder="$t('login.placeholder[0]')" v-model.trim="formData.username" />
             </ElFormItem>
@@ -246,7 +246,7 @@
       userStore.setLoginStatus(true)
 
       // 登录成功处理
-      showLoginSuccessNotice()
+      // showLoginSuccessNotice()
       router.push('/')
     } catch (error) {
       // 处理 HttpError

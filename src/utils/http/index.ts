@@ -6,8 +6,8 @@ import { $t } from '@/locales'
 
 // 常量定义
 const REQUEST_TIMEOUT = 15000 // 请求超时时间(毫秒)
-const LOGOUT_DELAY = 1000 // 退出登录延迟时间(毫秒)
-const MAX_RETRIES = 2 // 最大重试次数
+const LOGOUT_DELAY = 400 // 退出登录延迟时间(毫秒)
+const MAX_RETRIES = 0 // 最大重试次数
 const RETRY_DELAY = 1000 // 重试延迟时间(毫秒)
 
 // 扩展 AxiosRequestConfig 类型
