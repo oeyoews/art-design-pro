@@ -120,7 +120,7 @@ async function request<T = any>(config: ExtendedAxiosRequestConfig): Promise<T> 
 
   try {
     const res = await axiosInstance.request<Api.Http.BaseResponse<T>>(config)
-    return (res.data.data || res.data) as T
+    return (res.data) as T
   } catch (error) {
     if (error instanceof HttpError) {
       // 根据配置决定是否显示错误消息

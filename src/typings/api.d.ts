@@ -68,6 +68,7 @@ declare namespace Api {
 
     /** 用户列表数据 */
     interface UserListData {
+      data: any
       records: UserListItem[]
       rows: UserListItem[]
       current: number
