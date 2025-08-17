@@ -22,7 +22,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     meta: {
       title: '首页',
       keepAlive: false,
-      icon: '&#xe721;',
+      icon: '&#xe7c0;',
     }
   },
   {
