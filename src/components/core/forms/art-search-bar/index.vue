@@ -29,6 +29,7 @@
                 :is="getComponent(item)"
                 v-model="modelValue[item.key]"
                 v-bind="getProps(item)"
+                :placeholder="generateDefaultPlaceholder(item)"
               >
                 <!-- 下拉选择 -->
                 <template v-if="item.type === 'select' && getProps(item)?.options">
@@ -147,6 +148,18 @@
     timepicker: ElTimePicker, // 时间选择器
     timeselect: ElTimeSelect, // 时间选择
     treeselect: ElTreeSelect // 树选择器
+  }
+
+  const generateDefaultPlaceholder = (item:SearchFormItem) => {
+    const placeholder = getProps(item).placeholder
+    if (placeholder) {
+      return placeholder;
+    }
+    if (item.type === 'input') {
+      return `${t('table.searchBar.searchInputPlaceholder')}${item.label}`
+    } else if (item.type == 'select') {
+      return `${t('table.searchBar.searchSelectPlaceholder')}${item.label}`
+    }
   }
 
   const { width } = useWindowSize()

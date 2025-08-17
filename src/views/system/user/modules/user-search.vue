@@ -43,29 +43,22 @@
       label: '用户名称',
       key: 'userName',
       type: 'input',
-      config: {
-        clearable: true
-      },
+      clearable: true
     },
     {
       label: '手机号码',
       key: 'phonenumber',
       type: 'input',
-      clearable: true
+      clearable: true,
+      props: {
+        // placeholder: "",
+      }
     },
-    // {
-    //   label: '邮箱',
-    //   prop: 'email',
-    //   type: 'input',
-    //   config: {
-    //     clearable: true
-    //   },
-    // },
     {
       label: '创建时间',
-      key: 'daterange',
+      key: 'createTime',
       type: 'daterange',
-      config: {
+      props: {
         type: 'daterange',
         startPlaceholder: '开始日期',
         endPlaceholder: '结束日期'
@@ -77,8 +70,8 @@
       type: 'select',
       props: {
         options: [
-          { label: '在线', value: '1' },
-          { label: '离线', value: '2' }
+          { label: '正常', value: '0' },
+          { label: '禁用', value: '1' }
         ],
       }
     }
