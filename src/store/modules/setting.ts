@@ -45,7 +45,7 @@ export const useSettingStore = defineStore(
     /** 是否显示面包屑 */
     const showCrumbs = ref(true)
     /** 是否显示工作台标签 */
-    const showWorkTab = ref(true)
+    const showWorkTab = ref(false)
     /** 是否显示语言切换 */
     const showLanguage = ref(false)
     /** 是否显示进度条 */

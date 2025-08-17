@@ -5,7 +5,7 @@
 <template>
   <div class="user-page art-full-height">
     <!-- 搜索栏 -->
-    <UserSearch v-model:filter="defaultFilter" @reset="resetSearch" @search="handleSearch" />
+    <Search v-model:filter="defaultFilter" @reset="resetSearch" @search="handleSearch" />
 
     <ElCard class="art-table-card" shadow="never">
       <!-- 表格头部 -->
@@ -28,7 +28,7 @@
       </ArtTable>
 
       <!-- 用户弹窗 -->
-      <UserDialog
+      <Dialog
         v-model:visible="dialogVisible"
         :type="dialogType"
         :user-data="currentUserData"
@@ -44,8 +44,8 @@
   import { ElMessageBox, ElMessage, ElTag } from 'element-plus'
   import { useTable } from '@/composables/useTable'
   import * as rolesApi from '@/api/system/rolesApi'
-  import UserSearch from './modules/user-search.vue'
-  import UserDialog from './modules/user-dialog.vue'
+  import Search from './modules/search.vue'
+  import Dialog from './modules/dialog.vue'
   import { USER_STATUS_CONFIG } from '@/utils/constants/system'
 
   defineOptions({ name: 'User' })
@@ -64,11 +64,8 @@
 
   // 表单搜索初始值
   const defaultFilter = ref({
-    name: undefined,
-    // level: 'normal',
-    date: '2025-01-05'
-    // daterange: ['2025-01-01', '2025-02-10'],
-    // status: '0'
+    roleName: null,
+    status: null
   })
 
   /**
@@ -112,6 +109,7 @@
         size: 'pageSize'
       },
       columnsFactory: () => [
+        // { type:"selection" }, // 序号
         { prop: 'roleId', width: 80, label: '角色编号' }, // 序号
         { prop: 'roleName', label: '角色名称' },
         { prop: 'roleKey', label: '权限字符' },

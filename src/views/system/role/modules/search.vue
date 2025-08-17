@@ -52,21 +52,34 @@
   const formItems: SearchFormItem[] = [
     {
       label: '角色名称',
-      prop: 'userName',
+      prop: 'roleName',
       type: 'input',
-      config: {
-        clearable: true
-      },
       onChange: handleFormChange
     },
     {
       label: '状态',
       prop: 'status',
       type: 'select',
+      config: {
+        clearable: true
+      },
       options: [
-        { label: '在线', value: '1' },
-        { label: '离线', value: '2' }
+        { label: '正常', value: '0' },
+        { label: '停用', value: '1' }
       ],
+      onChange: handleFormChange
+    },
+    {
+      label: '创建时间',
+      elColSpan: 7,
+      config: {
+        type: 'daterange',
+        clearable: true,
+        startPlaceholder: '开始日期',
+        endPlaceholder: '结束日期'
+      },
+      prop: 'createTime',
+      type: "daterange",
       onChange: handleFormChange
     }
   ]

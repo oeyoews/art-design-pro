@@ -13,7 +13,7 @@
         <ElInput v-model="formData.userName" />
       </ElFormItem>
       <ElFormItem label="手机号" prop="phonenumber">
-        <ElInput v-model="formData.phonenumber" />
+        <ElInput v-model="formData.phonenumber" maxlength="11" show-word-limit/>
       </ElFormItem>
       <ElFormItem label="用户密码" prop="password" v-if="!isEdit">
         <ElInput type="password" v-model="formData.password" />
@@ -27,7 +27,7 @@
         </ElRadioGroup>
       </ElFormItem>
       <ElFormItem label="用户性别" prop="sex">
-        <ElSelect v-model="formData.sex">
+        <ElSelect v-model="formData.sex" clearable>
           <ElOption
             v-for="item in sexOptions"
             :key="item.value"
