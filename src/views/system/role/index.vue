@@ -50,17 +50,17 @@
 
   defineOptions({ name: 'User' })
 
-  type UserListItem = Api.User.UserListItem
+  type RoleListItem = SystemApi.Role.RoleListItem
   const { width } = useWindowSize()
   const { getRole, listRole, delRole } = rolesApi
 
   // 弹窗相关
   const dialogType = ref<Form.DialogType>('add')
   const dialogVisible = ref(false)
-  const currentUserData = ref<Partial<UserListItem>>({})
+  const currentUserData = ref<Partial<RoleListItem>>({})
 
   // 选中行
-  const selectedRows = ref<UserListItem[]>([])
+  const selectedRows = ref<RoleListItem[]>([])
 
   // 表单搜索初始值
   const defaultFilter = ref({
@@ -92,7 +92,7 @@
     onPageSizeChange,
     onCurrentPageChange,
     refreshAll
-  } = useTable<UserListItem>({
+  } = useTable<RoleListItem>({
     // 核心配置
     core: {
       apiFn: listRole,
@@ -134,7 +134,7 @@
           fixed: 'right', // 固定列
           formatter: (row) =>
             // 禁止管理员修改自身数据
-            row.userName != 'admin' &&
+            !row.admin &&
             h('div', [
               h(ArtButtonTable, {
                 type: 'edit',
@@ -167,7 +167,7 @@
   /**
    * 显示用户弹窗
    */
-  const showDialog = (type: Form.DialogType, row?: UserListItem): void => {
+  const showDialog = (type: Form.DialogType, row?: RoleListItem): void => {
     console.log('打开弹窗:', { type, row })
     dialogType.value = type
     currentUserData.value = row || {}
@@ -179,14 +179,14 @@
   /**
    * 删除用户
    */
-  const deleteUser = (row: UserListItem): void => {
+  const deleteUser = (row: RoleListItem): void => {
     console.log('删除用户:', row)
-    ElMessageBox.confirm(`确定要注销该用户吗？`, '注销用户', {
+    ElMessageBox.confirm(`确定要删除吗？`, '删除', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'error'
     }).then(() => {
-      delRole(row.userId).then(() => {
+      delRole(row.roleId).then(() => {
         ElMessage.success('注销成功')
         refreshAll()
       })
@@ -209,7 +209,7 @@
   /**
    * 处理表格行选择变化
    */
-  const handleSelectionChange = (selection: UserListItem[]): void => {
+  const handleSelectionChange = (selection: RoleListItem[]): void => {
     selectedRows.value = selection
     console.log('选中行数据:', selectedRows.value)
   }
