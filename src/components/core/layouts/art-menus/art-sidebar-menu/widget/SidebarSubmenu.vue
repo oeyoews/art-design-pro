@@ -26,7 +26,7 @@
       :level-item="level + 1"
       @click="goPage(item)"
     >
-      <MenuItemIcon :icon="item.meta.icon" :color="theme?.iconColor" />
+    <MenuItemIcon :iconType="item.meta.iconType" :icon="item.meta.icon" :color="theme?.iconColor" />
       <div
         v-show="item.meta.showBadge && level === 0 && !menuOpen"
         class="art-badge"
@@ -168,7 +168,7 @@
       /** 图标内容 */
       iconType: {
         type: String,
-        default: ''
+        default: 'iconfont-sys'
       },
       /** 图标内容 */
       icon: {
@@ -182,14 +182,22 @@
       }
     },
     setup(props) {
-      // props.iconType="oeyoews", use iconfont-oeyoews instead iconfont-sys
-      const classNames = props?.iconType || 'iconfont-sys'
       return () =>
         h('i', {
-          class: classNames + ' menu-icon',
-          style: props.color ? { color: props.color } : undefined,
+          class: props.iconType + ' menu-icon',
+          style: props.color ? {
+            color: props.color,
+            // marginRight: "5px"
+           } : undefined,
           innerHTML: props.icon
         })
     }
   })
 </script>
+
+<style scoped>
+  .menu-icon {
+    margin-right: 5px;
+    font-size: 16px;
+  }
+</style>

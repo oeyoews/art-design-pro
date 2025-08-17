@@ -2,7 +2,8 @@
   <ElSubMenu v-if="hasChildren" :index="item.path || item.meta.title">
     <template #title>
       <i
-        class="menu-icon iconfont-sys"
+        class="menu-icon"
+        :class="item.meta.iconType || 'iconfont-sys'"
         :style="{ color: theme?.iconColor }"
         v-html="item.meta.icon"
       ></i>
@@ -31,7 +32,8 @@
     @click="goPage(item)"
   >
     <i
-      class="menu-icon iconfont-sys"
+      class="menu-icon"
+      :class="item.meta.iconType || 'iconfont-sys'"
       :style="{ color: theme?.iconColor }"
       v-html="item.meta.icon"
     ></i>

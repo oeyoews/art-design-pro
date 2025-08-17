@@ -1,23 +1,30 @@
 {
   "id": "4975675",
-  "name": "图标集合",
+  "name": "custom-icons",
   "font_family": "iconfont-oeyoews",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
+    {
+      "icon_id": "6627754",
+      "name": "字典管理",
+      "font_class": "zidianguanli",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "3702619",
+      "name": "角色管理",
+      "font_class": "navicon-jsgl",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
     {
       "icon_id": "11060275",
       "name": "workflow",
       "font_class": "workflow3",
       "unicode": "e656",
       "unicode_decimal": 58966
-    },
-    {
-      "icon_id": "43742296",
-      "name": "132_吃瓜",
-      "font_class": "a-132_biaoqing02",
-      "unicode": "e8a0",
-      "unicode_decimal": 59552
     },
     {
       "icon_id": "7057916",

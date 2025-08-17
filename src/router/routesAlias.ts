@@ -24,7 +24,6 @@ export enum RoutesAlias {
   Workflow = '/workflow/tables',
   WorkflowBasic = '/workflow/tables/basic',
   WorkflowTree = '/examples/tables/tree',
-  WorkflowList = '/workflow/list',
 
   // 系统管理
   User = '/system/user', // 账户

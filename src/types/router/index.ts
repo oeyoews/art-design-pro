@@ -10,8 +10,8 @@ export interface RouteMeta extends Record<string | number | symbol, unknown> {
   title: string
   /** 路由图标 */
   icon?: string
-  /** 路由图标j集合类别 */
-  iconType?: string
+  /** 路由图标集合类别 */
+  iconType?: 'iconfont-sys' | 'iconfont-oeyoews'
   /** 是否显示徽章 */
   showBadge?: boolean
   /** 文本徽章 */

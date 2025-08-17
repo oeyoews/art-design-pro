@@ -16,26 +16,14 @@ import { AppRouteRecord } from '@/types/router'
  */
 export const asyncRoutes: AppRouteRecord[] = [
   {
-    name: 'Dashboard',
-    path: '/dashboard',
-    component: RoutesAlias.Layout,
+    path: '/home',
+    name: 'Console',
+    component: RoutesAlias.Dashboard,
     meta: {
-      title: 'menus.dashboard.title',
+      title: '首页',
+      keepAlive: false,
       icon: '&#xe721;',
-      roles: ['R_SUPER', 'R_ADMIN']
-    },
-    children: [
-      {
-        path: 'console',
-        name: 'Console',
-        component: RoutesAlias.Dashboard,
-        meta: {
-          title: 'menus.dashboard.console',
-          keepAlive: false,
-          fixedTab: true
-        }
-      },
-    ]
+    }
   },
   {
     name: 'Workflow',
@@ -48,16 +36,6 @@ export const asyncRoutes: AppRouteRecord[] = [
       roles: ['R_SUPER', 'R_ADMIN']
     },
     children: [
-      {
-        path: 'list',
-        name: 'list',
-        component: RoutesAlias.WorkflowList,
-        meta: {
-          title: "列表",
-          keepAlive: false,
-          fixedTab: true,
-        }
-      },
       {
         path: 'treelist',
         name: 'treelist',
@@ -95,9 +73,9 @@ export const asyncRoutes: AppRouteRecord[] = [
     name: 'System',
     component: RoutesAlias.Layout,
     meta: {
-      title: 'menus.system.title',
+      title: '系统管理',
       icon: '&#xe7b9;',
-      roles: ['R_SUPER', 'R_ADMIN']
+      roles: ['R_SUPER', 'R_ADMIN', 'admin']
     },
     children: [
       {
@@ -105,7 +83,8 @@ export const asyncRoutes: AppRouteRecord[] = [
         name: 'User',
         component: RoutesAlias.User,
         meta: {
-          title: 'menus.system.user',
+          title: '用户管理',
+          icon: '&#xe608;',
           keepAlive: true,
           roles: ['R_SUPER', 'R_ADMIN']
         }
@@ -115,20 +94,11 @@ export const asyncRoutes: AppRouteRecord[] = [
         name: 'Role',
         component: RoutesAlias.Role,
         meta: {
-          title: 'menus.system.role',
+          title: '角色管理',
+          iconType: 'iconfont-oeyoews',
+          icon: "&#xe640;",
           keepAlive: true,
           roles: ['R_SUPER']
-        }
-      },
-      {
-        path: 'user-center',
-        name: 'UserCenter',
-        component: RoutesAlias.UserCenter,
-        meta: {
-          title: 'menus.system.userCenter',
-          isHide: true,
-          keepAlive: true,
-          isHideTab: true
         }
       },
       {
@@ -136,9 +106,10 @@ export const asyncRoutes: AppRouteRecord[] = [
         name: 'Menus',
         component: RoutesAlias.Menu,
         meta: {
-          title: 'menus.system.menu',
+          title: '菜单管理',
           keepAlive: true,
           roles: ['R_SUPER'],
+          icon: "&#xe662;",
           authList: [
             {
               title: '新增',
@@ -154,7 +125,18 @@ export const asyncRoutes: AppRouteRecord[] = [
             }
           ]
         }
-      }
+      },
+      {
+        path: 'user-center',
+        name: 'UserCenter',
+        component: RoutesAlias.UserCenter,
+        meta: {
+          title: '用户中心',
+          isHide: true,
+          keepAlive: true,
+          isHideTab: true
+        }
+      },
     ]
   },
   {
