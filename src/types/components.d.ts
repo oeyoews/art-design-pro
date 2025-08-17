@@ -23,6 +23,8 @@ declare module 'vue' {
     ArtDonutChartCard: typeof import('./../components/core/cards/art-donut-chart-card/index.vue')['default']
     ArtDragVerify: typeof import('./../components/core/forms/art-drag-verify/index.vue')['default']
     ArtDualBarCompareChart: typeof import('./../components/core/charts/art-dual-bar-compare-chart/index.vue')['default']
+    ArtExcelExport: typeof import('./../components/core/forms/art-excel-export/index.vue')['default']
+    ArtExcelImport: typeof import('./../components/core/forms/art-excel-import/index.vue')['default']
     ArtException: typeof import('./../components/core/views/exception/ArtException.vue')['default']
     ArtFastEnter: typeof import('./../components/core/layouts/art-fast-enter/index.vue')['default']
     ArtFestivalTextScroll: typeof import('./../components/core/text-effect/art-festival-text-scroll/index.vue')['default']
@@ -61,6 +63,7 @@ declare module 'vue' {
     ArtTextScroll: typeof import('./../components/core/text-effect/art-text-scroll/index.vue')['default']
     ArtTimelineListCard: typeof import('./../components/core/cards/art-timeline-list-card/index.vue')['default']
     ArtVideoPlayer: typeof import('./../components/core/media/art-video-player/index.vue')['default']
+    ArtWangEditor: typeof import('./../components/core/forms/art-wang-editor/index.vue')['default']
     ArtWatermark: typeof import('./../components/core/others/art-watermark/index.vue')['default']
     ArtWorkTab: typeof import('./../components/core/layouts/art-work-tab/index.vue')['default']
     BasicSettings: typeof import('./../components/core/layouts/art-settings-panel/widget/BasicSettings.vue')['default']
@@ -115,6 +118,7 @@ declare module 'vue' {
     SettingItem: typeof import('./../components/core/layouts/art-settings-panel/widget/SettingItem.vue')['default']
     SidebarSubmenu: typeof import('./../components/core/layouts/art-menus/art-sidebar-menu/widget/SidebarSubmenu.vue')['default']
     ThemeSettings: typeof import('./../components/core/layouts/art-settings-panel/widget/ThemeSettings.vue')['default']
+    ThemeSvg: typeof import('./../components/core/theme/theme-svg/index.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

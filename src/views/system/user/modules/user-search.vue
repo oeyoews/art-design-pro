@@ -1,72 +1,57 @@
 <!-- 用户搜索栏 -->
 <template>
   <ArtSearchBar
-    v-model:filter="searchFormState"
+    ref="searchBarRef"
+    v-model="formData"
     :items="formItems"
+    :rules="rules"
     @reset="handleReset"
     @search="handleSearch"
-  />
+  >
+  </ArtSearchBar>
 </template>
 
 <script setup lang="ts">
-  import type { SearchChangeParams, SearchFormItem } from '@/types'
+  import { ref, computed, onMounted, h } from 'vue'
 
+  interface Props {
+    modelValue: Record<string, any>
+  }
   interface Emits {
+    (e: 'update:modelValue', value: Record<string, any>): void
     (e: 'search', params: Record<string, any>): void
     (e: 'reset'): void
   }
-
-  const props = defineProps<{
-    filter: Record<string, any>
-  }>()
-
+  const props = defineProps<Props>()
   const emit = defineEmits<Emits>()
 
-  const searchFormState = ref({ ...props.filter })
+  // 表单数据双向绑定
+  const searchBarRef = ref()
+  const formData = computed({
+    get: () => props.modelValue,
+    set: (val) => emit('update:modelValue', val)
+  })
 
-  watch(
-    () => props.filter,
-    (newFilter) => {
-      searchFormState.value = { ...newFilter }
-    },
-    { deep: true, immediate: true }
-  )
-
-  // 重置表单
-  const handleReset = () => {
-    searchFormState.value = { ...props.filter }
-    emit('reset')
+  // 校验规则
+  const rules = {
+    // name: [{ required: true, message: '请输入用户名', trigger: 'blur' }]
   }
 
-  // 搜索处理
-  const handleSearch = () => {
-    console.log('搜索参数:', searchFormState.value)
-    emit('search', searchFormState.value)
-  }
-
-  const handleFormChange = (params: SearchChangeParams): void => {
-    console.log('表单项变更:', params)
-  }
-
-  // --- 表单配置项 ---
-  const formItems: SearchFormItem[] = [
-    {
+  // 表单配置
+  const formItems = computed(() => [
+  {
       label: '用户名称',
-      prop: 'userName',
+      key: 'userName',
       type: 'input',
       config: {
         clearable: true
       },
-      onChange: handleFormChange
     },
     {
       label: '手机号码',
-      prop: 'phonenumber',
+      key: 'phonenumber',
       type: 'input',
-      config: {
-        clearable: true
-      },
-      onChange: handleFormChange
+      clearable: true
     },
     // {
     //   label: '邮箱',
@@ -75,11 +60,10 @@
     //   config: {
     //     clearable: true
     //   },
-    //   onChange: handleFormChange
     // },
     {
-      prop: 'daterange',
       label: '创建时间',
+      key: 'daterange',
       type: 'daterange',
       config: {
         type: 'daterange',
@@ -89,13 +73,24 @@
     },
     {
       label: '状态',
-      prop: 'status',
+      key: 'status',
       type: 'select',
-      options: [
-        { label: '在线', value: '1' },
-        { label: '离线', value: '2' }
-      ],
-      onChange: handleFormChange
+      props: {
+        options: [
+          { label: '在线', value: '1' },
+          { label: '离线', value: '2' }
+        ],
+      }
     }
-  ]
+  ])
+
+  // 事件
+  function handleReset() {
+    emit('reset')
+  }
+
+  async function handleSearch() {
+    await searchBarRef.value.validate()
+    emit('search', formData.value)
+  }
 </script>

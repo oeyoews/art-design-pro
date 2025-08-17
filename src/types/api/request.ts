@@ -46,3 +46,4 @@ export interface BaseRequestConfig {
   data?: any
   timeout?: number
 }
+

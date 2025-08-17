@@ -5,11 +5,11 @@
 <template>
   <div class="user-page art-full-height">
     <!-- 搜索栏 -->
-    <UserSearch v-model:filter="defaultFilter" @reset="resetSearch" @search="handleSearch" />
+    <UserSearch v-model="searchForm" @search="handleSearch" @reset="resetSearchParams" />
 
     <ElCard class="art-table-card" shadow="never">
       <!-- 表格头部 -->
-      <ArtTableHeader v-model:columns="columnChecks" @refresh="refreshAll">
+      <ArtTableHeader v-model:columns="columnChecks" @refresh="refreshData">
         <template #left>
           <ElButton @click="showDialog('add')">新增用户</ElButton>
         </template>
@@ -17,13 +17,13 @@
 
       <!-- 表格 -->
       <ArtTable
-        :loading="isLoading"
-        :data="tableData"
+        :loading="loading"
+        :data="data"
         :columns="columns"
-        :pagination="paginationState"
+        :pagination="pagination"
         @selection-change="handleSelectionChange"
-        @pagination:size-change="onPageSizeChange"
-        @pagination:current-change="onCurrentPageChange"
+        @pagination:size-change="handleSizeChange"
+        @pagination:current-change="handleCurrentChange"
       >
       </ArtTable>
 
@@ -63,7 +63,7 @@
   const selectedRows = ref<UserListItem[]>([])
 
   // 表单搜索初始值
-  const defaultFilter = ref({
+  const searchForm = ref({
     name: undefined,
     // level: 'normal',
     date: '2025-01-05'
@@ -86,15 +86,15 @@
   const {
     columns,
     columnChecks,
-    tableData,
-    isLoading,
-    paginationState,
-    searchData,
-    searchState,
-    resetSearch,
-    onPageSizeChange,
-    onCurrentPageChange,
-    refreshAll
+    data,
+    loading,
+    pagination,
+    getData,
+    searchParams,
+    resetSearchParams,
+    handleSizeChange,
+    handleCurrentChange,
+    refreshData
   } = useTable<UserListItem>({
     // 核心配置
     core: {
@@ -102,10 +102,11 @@
       apiParams: {
         current: 1,
         size: 20,
-        ...defaultFilter.value,
+        ...searchForm.value,
         pageNum: 1,
         pageSize: 20
       },
+      excludeParams: ['daterange'],
       // 自定义分页字段映射，同时需要在 apiParams 中配置字段名
       paginationKey: {
         current: 'pageNum',
@@ -201,12 +202,12 @@
    */
   const handleSearch = (params: Record<string, any>) => {
     // 处理日期区间参数，把 daterange 转换为 startTime 和 endTime
-    const { daterange, ...searchParams } = params
+    const { daterange, ...filtersParams } = params
     const [startTime, endTime] = Array.isArray(daterange) ? daterange : [null, null]
 
     // 搜索参数赋值
-    Object.assign(searchState, { ...searchParams, startTime, endTime })
-    searchData()
+    Object.assign(searchParams, { ...filtersParams, startTime, endTime })
+    getData()
   }
 
   /**
@@ -233,7 +234,7 @@
     }).then(() => {
       delUser(row.userId).then(() => {
         ElMessage.success('注销成功')
-        refreshAll()
+        refreshData()
       })
     })
   }
@@ -245,7 +246,7 @@
     try {
       dialogVisible.value = false
       currentUserData.value = {}
-      refreshAll()
+      refreshData()
     } catch (error) {
       console.error('提交失败:', error)
     }
