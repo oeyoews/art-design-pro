@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
   import { useTable } from '@/composables/useTable'
-  import { UserService } from '@/api/usersApi'
+  import { UserService } from '@/api/system/usersApi'
   import { ElButton, ElCard } from 'element-plus'
   import UserSearch from '@/views/system/user/modules/user-search.vue'
 

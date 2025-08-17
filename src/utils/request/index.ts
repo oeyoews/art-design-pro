@@ -109,7 +109,7 @@ function shouldRetry(statusCode: number): boolean {
 }
 
 // 请求函数
-async function request<T = any>(config: ExtendedAxiosRequestConfig): Promise<T> {
+export async function request<T = any>(config: ExtendedAxiosRequestConfig): Promise<T> {
   // 对 POST | PUT 请求特殊处理
   if (config.method?.toUpperCase() === 'POST' || config.method?.toUpperCase() === 'PUT') {
     if (config.params && !config.data) {

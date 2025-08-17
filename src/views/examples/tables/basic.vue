@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
   import { useTable } from '@/composables/useTable'
-  import { UserService } from '@/api/usersApi'
+  import { UserService } from '@/api/system/usersApi'
 
   defineOptions({ name: 'UserMixedUsageExample' })
 

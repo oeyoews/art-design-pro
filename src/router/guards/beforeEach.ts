@@ -6,7 +6,7 @@ import { useUserStore } from '@/store/modules/user'
 import { useMenuStore } from '@/store/modules/menu'
 import { setWorktab } from '@/utils/navigation'
 import { setPageTitle, setSystemTheme } from '../utils/utils'
-import { menuService } from '@/api/menuApi'
+import { menuService } from '@/api/system/menuApi'
 import { registerDynamicRoutes } from '../utils/registerRoutes'
 import { AppRouteRecord } from '@/types/router'
 import { RoutesAlias } from '../routesAlias'
@@ -15,7 +15,7 @@ import { asyncRoutes } from '../routes/asyncRoutes'
 import { loadingService } from '@/utils/ui'
 import { useCommon } from '@/composables/useCommon'
 import { useWorktabStore } from '@/store/modules/worktab'
-import { UserService } from '@/api/usersApi'
+import { UserService } from '@/api/system/usersApi'
 
 // 前端权限模式 loading 关闭延时，提升用户体验
 const LOADING_DELAY = 100

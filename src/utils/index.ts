@@ -28,7 +28,7 @@ export * from './storage'
 export * from './theme'
 
 // HTTP 相关
-export * from './http'
+export * from './request'
 
 // 验证相关
 export * from './validation'

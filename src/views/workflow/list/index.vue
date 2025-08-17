@@ -87,7 +87,7 @@
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { Plus, Delete, Edit, Search, Refresh, QuestionFilled } from '@element-plus/icons-vue'
   import { useTable } from '@/composables/useTable'
-  import { UserService } from '@/api/usersApi'
+  import { UserService } from '@/api/system/usersApi'
   import { searchItems } from './search'
 
   defineOptions({ name: 'WorkflowList' })

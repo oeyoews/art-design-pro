@@ -1,4 +1,4 @@
-<!-- 用户管理 -->
+<!-- 角色管理 -->
 <!-- art-full-height 自动计算出页面剩余高度 -->
 <!-- art-table-card 一个符合系统样式的 class，同时自动撑满剩余高度 -->
 <!-- 如果你想使用 template 语法，请移步功能示例下面的高级表格示例 -->
@@ -43,7 +43,7 @@
   import { ACCOUNT_TABLE_DATA } from '@/mock/temp/formData'
   import { ElMessageBox, ElMessage, ElTag } from 'element-plus'
   import { useTable } from '@/composables/useTable'
-  import { UserService } from '@/api/usersApi'
+  import { UserService } from '@/api/system/usersApi'
   import UserSearch from './modules/user-search.vue'
   import UserDialog from './modules/user-dialog.vue'
   import { USER_STATUS_CONFIG } from '@/utils/constants/system'

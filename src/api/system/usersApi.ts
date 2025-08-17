@@ -1,11 +1,11 @@
-import request from '@/utils/http'
+import request from '@/utils/request'
 
 export class UserService {
   // 登录
   static login(params: Api.Auth.LoginParams) {
     return request.post<Api.Auth.LoginResponse>({
       // url: '/api/auth/login',
-      url: '/api/login',
+      url: '/login',
       params
       // 自定义请求头
       // headers: {
@@ -19,7 +19,7 @@ export class UserService {
   static getUserInfo() {
     return request.get<Api.User.UserInfo>({
       // url: '/api/user/info'
-      url: '/api/getInfo'
+      url: '/getInfo'
     })
   }
 
@@ -27,7 +27,7 @@ export class UserService {
   static getUserList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({
       // url: '/api/user/list',
-      url: "/api/system/user/list",
+      url: "/system/user/list",
       params
     })
   }
@@ -35,7 +35,7 @@ export class UserService {
   static getRoleList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({
       // url: '/api/user/list',
-      url: "/api/system/role/list",
+      url: "/system/role/list",
       params
     })
   }
@@ -43,21 +43,21 @@ export class UserService {
   // 删除用户
   static delUser(id: number) {
     return request.del<Api.User.UserListData>({
-      url: "/api/system/user/" + id,
+      url: "/system/user/" + id,
     })
   }
 
   /** 查询用户信息 */
   static getUser(id: string) {
     return request.get<Api.User.UserListData>({
-      url: "/api/system/user/"+id,
+      url: "/system/user/"+id,
     })
   }
 
   /** 更新用户信息 */
   static addUser(data: any) {
     return request.post<Api.User.UserListData>({
-      url: "/api/system/user",
+      url: "/system/user",
       data
     })
   }
@@ -66,7 +66,7 @@ export class UserService {
   /** 更新用户信息 */
   static editUser(data: any) {
     return request.put<Api.User.UserListData>({
-      url: "/api/system/user",
+      url: "/system/user",
       data
     })
   }
@@ -74,25 +74,15 @@ export class UserService {
   /** 获取当前用户信息 */
   static getProfile() {
     return request.get<Api.User.UserListData>({
-      url: "/api/system/user/profile",
+      url: "/system/user/profile",
     })
   }
 
   /** 获取当前用户信息 */
   static updateProfile(data:any) {
     return request.put<Api.User.UserListData>({
-      url: "/api/system/user/profile",
+      url: "/system/user/profile",
       data
-    })
-  }
-
-
-
-  // test
-  static getUserWorkflowList(params: Api.Common.PaginatingSearchParams) {
-    return request.get<Api.User.UserListData>({
-      url: '/api/workflow/list',
-      params
     })
   }
 }

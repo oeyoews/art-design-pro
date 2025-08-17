@@ -156,7 +156,7 @@
   import { useUserStore } from '@/store/modules/user'
   import { ElForm, ElMessage, FormInstance, FormRules } from 'element-plus'
 
-  import { UserService } from '@/api/usersApi'
+  import { UserService } from '@/api/system/usersApi'
   import { sexOptions } from '@/utils/constants/system'
 
   defineOptions({ name: 'UserCenter' })

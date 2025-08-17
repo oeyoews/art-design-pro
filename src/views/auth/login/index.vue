@@ -127,7 +127,7 @@
   import { languageOptions } from '@/locales'
   import { LanguageEnum, SystemThemeEnum } from '@/enums/appEnum'
   import { useI18n } from 'vue-i18n'
-  import { HttpError } from '@/utils/http/error'
+  import { HttpError } from '@/utils/request/error'
 
   defineOptions({ name: 'Login' })
 
@@ -293,7 +293,7 @@
 
   // 切换主题
   import { useTheme } from '@/composables/useTheme'
-  import { UserService } from '@/api/usersApi'
+  import { UserService } from '@/api/system/usersApi'
 
   const toggleTheme = () => {
     let { LIGHT, DARK } = SystemThemeEnum
