@@ -4,6 +4,17 @@ import { AppRouteRecord } from '@/types/router'
 /** 系统管理菜单 */
 export const systemRoutes: AppRouteRecord[] = [
   {
+    path: 'user-center',
+    name: 'UserCenter',
+    component: RoutesAlias.UserCenter,
+    meta: {
+      title: '用户中心',
+      isHide: true,
+      keepAlive: true,
+      isHideTab: true
+    }
+  },
+  {
     path: '/system',
     name: 'System',
     component: RoutesAlias.Layout,
@@ -59,17 +70,6 @@ export const systemRoutes: AppRouteRecord[] = [
               authMark: 'delete'
             }
           ]
-        }
-      },
-      {
-        path: 'user-center',
-        name: 'UserCenter',
-        component: RoutesAlias.UserCenter,
-        meta: {
-          title: '用户中心',
-          isHide: true,
-          keepAlive: true,
-          isHideTab: true
         }
       },
     ]
