@@ -91,7 +91,8 @@
     resetSearchParams,
     handleSizeChange,
     handleCurrentChange,
-    refreshData
+    refreshData,
+    refreshRemove
   } = useTable<UserListItem>({
     // 核心配置
     core: {
@@ -210,7 +211,7 @@
    * 显示用户弹窗
    */
   const showDialog = (type: Form.DialogType, row?: UserListItem): void => {
-    console.log('打开弹窗:', { type, row })
+    // console.log('打开弹窗:', { type, row })
     dialogType.value = type
     currentUserData.value = row || {}
     nextTick(() => {
@@ -230,7 +231,7 @@
     }).then(() => {
       delUser(row.userId).then(() => {
         ElMessage.success('注销成功')
-        refreshData()
+        refreshRemove();
       })
     })
   }
@@ -242,7 +243,7 @@
     try {
       dialogVisible.value = false
       currentUserData.value = {}
-      refreshData()
+      refreshData();
     } catch (error) {
       console.error('提交失败:', error)
     }
