@@ -6,7 +6,6 @@
   <div class="user-page art-full-height">
     <!-- 搜索栏 -->
     <UserSearch v-model="searchForm" @search="handleSearch" @reset="resetSearchParams" />
-    {{ searchForm }}
 
     <ElCard class="art-table-card" shadow="never">
       <!-- 表格头部 -->
