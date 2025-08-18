@@ -189,12 +189,6 @@
       "backBtnText": "Back to login"
     }
   },
-  "greeting": {
-    "dawn": "Good morning!",
-    "morning": "Good morning!",
-    "afternoon": "Good afternoon!",
-    "evening": "Good evening!"
-  },
   "exceptionPage": {
     "gohome": "Go Home",
     "403": "Sorry, you do not have permission to access this page",

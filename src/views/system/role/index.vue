@@ -37,7 +37,6 @@
 
 <script setup lang="ts">
   import ArtButtonTable from '@/components/core/forms/art-button-table/index.vue'
-  import { ACCOUNT_TABLE_DATA } from '@/mock/temp/formData'
   import { ElMessageBox, ElMessage, ElTag } from 'element-plus'
   import { useTable } from '@/composables/useTable'
   import * as rolesApi from '@/api/system/rolesApi'
@@ -48,7 +47,6 @@
   defineOptions({ name: 'User' })
 
   type RoleListItem = SystemApi.Role.RoleListItem
-  const { width } = useWindowSize()
   const { getRole, listRole, delRole } = rolesApi
 
   // 弹窗相关

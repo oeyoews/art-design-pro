@@ -181,12 +181,6 @@
       "backBtnText": "返回登录"
     }
   },
-  "greeting": {
-    "dawn": "凌晨了！",
-    "morning": "上午好！",
-    "afternoon": "下午好！",
-    "evening": "晚上好！"
-  },
   "exceptionPage": {
     "gohome": "返回首页",
     "403": "抱歉，您无权访问该页面",
