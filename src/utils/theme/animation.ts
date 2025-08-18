@@ -1,4 +1,4 @@
-import { useCommon } from '@/composables/useCommon'
+// import { useCommon } from '@/composables/useCommon'
 import { useTheme } from '@/composables/useTheme'
 import { SystemThemeEnum } from '@/enums/appEnum'
 import { useSettingStore } from '@/store/modules/setting'
