@@ -6,6 +6,7 @@
   <div class="user-page art-full-height">
     <!-- 搜索栏 -->
     <UserSearch v-model="searchForm" @search="handleSearch" @reset="resetSearchParams" />
+    {{ searchForm }}
 
     <ElCard class="art-table-card" shadow="never">
       <!-- 表格头部 -->
@@ -64,11 +65,8 @@
 
   // 表单搜索初始值
   const searchForm = ref({
-    name: undefined,
-    // level: 'normal',
-    date: '2025-01-05'
-    // daterange: ['2025-01-01', '2025-02-10'],
-    // status: '0'
+    // userName: undefined,
+    // date: null
   })
 
   /**
@@ -204,7 +202,6 @@
     // 处理日期区间参数，把 daterange 转换为 startTime 和 endTime
     const { daterange, ...filtersParams } = params
     const [startTime, endTime] = Array.isArray(daterange) ? daterange : [null, null]
-
     // 搜索参数赋值
     Object.assign(searchParams, { ...filtersParams, startTime, endTime })
     getData()

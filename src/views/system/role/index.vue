@@ -1,15 +1,13 @@
-<!-- 用户管理 -->
-<!-- art-full-height 自动计算出页面剩余高度 -->
-<!-- art-table-card 一个符合系统样式的 class，同时自动撑满剩余高度 -->
-<!-- 如果你想使用 template 语法，请移步功能示例下面的高级表格示例 -->
+<!-- 角色管理 -->
 <template>
   <div class="user-page art-full-height">
     <!-- 搜索栏 -->
-    <Search v-model:filter="defaultFilter" @reset="resetSearch" @search="handleSearch" />
+    <Search v-model="searchForm" @search="handleSearch" @reset="resetSearchParams" />
+    {{ searchForm }}
 
     <ElCard class="art-table-card" shadow="never">
       <!-- 表格头部 -->
-      <ArtTableHeader v-model:columns="columnChecks" @refresh="refreshAll">
+      <ArtTableHeader v-model:columns="columnChecks" @refresh="refreshData">
         <template #left>
           <ElButton @click="showDialog('add')">新增角色</ElButton>
         </template>
@@ -17,17 +15,17 @@
 
       <!-- 表格 -->
       <ArtTable
-        :loading="isLoading"
-        :data="tableData"
+        :loading="loading"
+        :data="data"
         :columns="columns"
-        :pagination="paginationState"
+        :pagination="pagination"
         @selection-change="handleSelectionChange"
-        @pagination:size-change="onPageSizeChange"
-        @pagination:current-change="onCurrentPageChange"
+        @pagination:size-change="handleSizeChange"
+        @pagination:current-change="handleCurrentChange"
       >
       </ArtTable>
 
-      <!-- 用户弹窗 -->
+      <!-- 弹窗 -->
       <Dialog
         v-model:visible="dialogVisible"
         :type="dialogType"
@@ -63,9 +61,10 @@
   const selectedRows = ref<RoleListItem[]>([])
 
   // 表单搜索初始值
-  const defaultFilter = ref({
-    roleName: null,
-    status: null
+  const searchForm = ref({
+    // roleName: null,
+    // status: null,
+    // phonenumber: null,
   })
 
   /**
@@ -83,15 +82,15 @@
   const {
     columns,
     columnChecks,
-    tableData,
-    isLoading,
-    paginationState,
-    searchData,
-    searchState,
-    resetSearch,
-    onPageSizeChange,
-    onCurrentPageChange,
-    refreshAll
+    data,
+    loading,
+    pagination,
+    getData,
+    searchParams,
+    handleSizeChange,
+    handleCurrentChange,
+    resetSearchParams,
+    refreshData
   } = useTable<RoleListItem>({
     // 核心配置
     core: {
@@ -99,10 +98,11 @@
       apiParams: {
         current: 1,
         size: 20,
-        ...defaultFilter.value,
+        ...searchForm.value,
         pageNum: 1,
         pageSize: 20
       },
+      excludeParams: ['daterange'],
       // 自定义分页字段映射，同时需要在 apiParams 中配置字段名
       paginationKey: {
         current: 'pageNum',
@@ -156,12 +156,11 @@
    */
   const handleSearch = (params: Record<string, any>) => {
     // 处理日期区间参数，把 daterange 转换为 startTime 和 endTime
-    const { daterange, ...searchParams } = params
+    const { daterange, ...filtersParams } = params
     const [startTime, endTime] = Array.isArray(daterange) ? daterange : [null, null]
-
     // 搜索参数赋值
-    Object.assign(searchState, { ...searchParams, startTime, endTime })
-    searchData()
+    Object.assign(searchParams, { ...filtersParams, startTime, endTime })
+    getData()
   }
 
   /**
@@ -188,7 +187,7 @@
     }).then(() => {
       delRole(row.roleId).then(() => {
         ElMessage.success('注销成功')
-        refreshAll()
+        refreshData()
       })
     })
   }
@@ -200,7 +199,7 @@
     try {
       dialogVisible.value = false
       currentUserData.value = {}
-      refreshAll()
+      refreshData();
     } catch (error) {
       console.error('提交失败:', error)
     }

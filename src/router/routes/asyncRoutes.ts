@@ -30,6 +30,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     path: '/workflow',
     component: RoutesAlias.Layout,
     meta: {
+      isHide: true,
       title: "工作流",
       icon: '&#xe7f3;',
       iconType: 'iconfont-oeyoews',

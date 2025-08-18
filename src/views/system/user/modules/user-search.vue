@@ -4,7 +4,6 @@
     ref="searchBarRef"
     v-model="formData"
     :items="formItems"
-    :rules="rules"
     @reset="handleReset"
     @search="handleSearch"
   >
@@ -32,11 +31,6 @@
     set: (val) => emit('update:modelValue', val)
   })
 
-  // 校验规则
-  const rules = {
-    // name: [{ required: true, message: '请输入用户名', trigger: 'blur' }]
-  }
-
   // 表单配置
   const formItems = computed(() => [
   {
@@ -55,16 +49,6 @@
       }
     },
     {
-      label: '创建时间',
-      key: 'createTime',
-      type: 'daterange',
-      props: {
-        type: 'daterange',
-        startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期'
-      }
-    },
-    {
       label: '状态',
       key: 'status',
       type: 'select',
@@ -74,7 +58,17 @@
           { label: '禁用', value: '1' }
         ],
       }
-    }
+    },
+    {
+      label: '创建时间',
+      key: 'daterange',
+      type: 'daterange',
+      props: {
+        type: 'daterange',
+        startPlaceholder: '开始日期',
+        endPlaceholder: '结束日期'
+      }
+    },
   ])
 
   // 事件
