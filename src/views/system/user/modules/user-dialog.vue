@@ -16,7 +16,7 @@
         <ElInput v-model="formData.phonenumber" maxlength="11" show-word-limit/>
       </ElFormItem>
       <ElFormItem label="用户密码" prop="password" v-if="!isEdit">
-        <ElInput type="password" v-model="formData.password" />
+        <ElInput type="password" v-model="formData.password" show-password/>
       </ElFormItem>
       <ElFormItem label="状态" prop="status" >
         <ElRadioGroup v-model="formData.status">

@@ -87,7 +87,7 @@
 
             <ElRow>
               <ElFormItem label="手机" prop="phonenumber">
-                <ElInput v-model="form.phonenumber" :disabled="!isEdit" />
+                <ElInput v-model="form.phonenumber" :disabled="!isEdit" show-word-limit maxlength="11"/>
               </ElFormItem>
               <!-- <ElFormItem label="地址" prop="address" class="right-input">
                 <ElInput v-model="form.address" :disabled="!isEdit" />
@@ -109,7 +109,7 @@
           </ElForm>
         </div>
 
-        <div class="info box-style" style="margin-top: 20px">
+        <div class="info box-style" style="margin-top: 20px" v-if="!userInfo.user?.admin">
           <h1 class="title">更改密码</h1>
 
           <ElForm :model="pwdForm" class="form" label-width="86px" label-position="top">
@@ -190,10 +190,13 @@
       { required: true, message: '请输入昵称', trigger: 'blur' },
       { min: 2, max: 50, message: '长度在 2 到 30 个字符', trigger: 'blur' }
     ],
-    email: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
-    mobile: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
+    email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
     address: [{ required: true, message: '请输入地址', trigger: 'blur' }],
-    sex: [{ required: true, message: '请选择性别', trigger: 'blur' }]
+    sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
+    phonenumber: [
+      { required: true, message: '请输入手机号', trigger: 'blur' },
+      { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的手机号格式', trigger: 'blur' }
+    ],
   })
 
   // const lableList: Array<string> = ['专注设计', '很有想法', '海纳百川']

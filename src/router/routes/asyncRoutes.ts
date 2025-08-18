@@ -26,5 +26,5 @@ export const asyncRoutes: AppRouteRecord[] = [
       icon: '&#xe7c0;',
     }
   },
-  ...systemRoutes
+  ...systemRoutes,
 ]

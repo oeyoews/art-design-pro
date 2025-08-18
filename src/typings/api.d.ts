@@ -41,7 +41,7 @@ declare namespace Api {
   namespace Auth {
     /** 登录参数 */
     interface LoginParams {
-      userName: string
+      userName?: string
       username: string // ruoyi
       password: string
     }
@@ -58,6 +58,7 @@ declare namespace Api {
     /** 用户信息 */
     interface UserInfo {
       user: {
+        admin: boolean
         userId: number
         userName: string
         buttons: string[]
