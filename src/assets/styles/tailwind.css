@@ -1,0 +1,10 @@
+@config '../../../tailwind.config.js';
+
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+/* @import "tailwindcss/preflight.css" layer(base); */
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* 支持黑暗模式 */
+@custom-variant dark (&:where(.dark, .dark *));
