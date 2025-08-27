@@ -11,10 +11,14 @@ import '@styles/theme-animation.scss'               // 主题切换动画
 import '@styles/el-light.scss'                      // Element 自定义主题（亮色）
 import '@styles/el-dark.scss'                       // Element 自定义主题（暗色）
 import '@styles/dark.scss'                          // 系统主题
+
 import '@icons/system/iconfont.js'                  // 系统彩色图标
 import '@icons/system/iconfont.css'                 // 系统图标
 import '@icons/oeyoews/iconfont.js'                  // 系统彩色图标
 import '@icons/oeyoews/iconfont.css'                 // 系统图标
+
+import '@styles/tailwind.css'
+
 // import '@utils/sys/console.ts'                      // 控制台输出内容
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { setupGlobDirectives } from './directives'
