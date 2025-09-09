@@ -6,6 +6,7 @@ import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { fileURLToPath } from 'url'
+import tailwindcss from '@tailwindcss/vite'
 // import viteImagemin from 'vite-plugin-imagemin'
 // import { visualizer } from 'rollup-plugin-visualizer'
 
@@ -75,6 +76,7 @@ export default ({ mode }: { mode: string }) => {
     },
     plugins: [
       vue(),
+      tailwindcss(),
       // 自动导入 components 下面的组件，无需 import 引入
       Components({
         deep: true,
@@ -87,12 +89,6 @@ export default ({ mode }: { mode: string }) => {
         imports: ['vue', 'vue-router', '@vueuse/core', 'pinia'],
         resolvers: [ElementPlusResolver()],
         dts: 'src/types/auto-imports.d.ts',
-        eslintrc: {
-          // 这里先设置成true然后pnpm dev 运行之后会生成 .auto-import.json 文件之后，在改为false
-          enabled: true,
-          filepath: './.auto-import.json',
-          globalsPropValue: true
-        }
       }),
       // 打包分析
       // visualizer({

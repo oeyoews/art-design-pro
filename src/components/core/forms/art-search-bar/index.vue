@@ -151,7 +151,7 @@
   }
 
   const generateDefaultPlaceholder = (item:SearchFormItem) => {
-    const placeholder = getProps(item).placeholder
+    const placeholder = item.placeholder || getProps(item).placeholder;
     if (placeholder) {
       return placeholder;
     }
