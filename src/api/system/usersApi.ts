@@ -1,10 +1,10 @@
+// @ts-nocheck
 import request from '@/utils/request'
 
 export class UserService {
   // 获取用户列表
   static getUserList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({
-      // url: '/api/user/list',
       url: "/system/user/list",
       params
     })
@@ -12,7 +12,6 @@ export class UserService {
   // 获取角色表
   static getRoleList(params: Api.Common.PaginatingSearchParams) {
     return request.get<Api.User.UserListData>({
-      // url: '/api/user/list',
       url: "/system/role/list",
       params
     })

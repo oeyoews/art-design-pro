@@ -46,6 +46,7 @@
   import { ElMessageBox, ElMessage, ElTag } from 'element-plus'
   import { useTable } from '@/composables/useTable'
   import { fetchGetUserList } from '@/api/system-manage'
+  import { UserService } from '@/api/system/usersApi'
   import UserSearch from './modules/user-search.vue'
   import UserDialog from './modules/user-dialog.vue'
   import { USER_STATUS_CONFIG } from '@/utils/constants/system'
@@ -229,7 +230,7 @@
       cancelButtonText: '取消',
       type: 'error'
     }).then(() => {
-      delUser(row.userId).then(() => {
+      UserService.delUser(row.userId).then(() => {
         ElMessage.success('注销成功')
         refreshRemove();
       })
