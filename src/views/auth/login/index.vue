@@ -228,7 +228,7 @@
       // 登录请求
       const { username, password } = formData
 
-      const { token, refreshToken } = await UserService.login({
+      const { token, refreshToken } = await fetchLogin({
         // userName: username,
         username,
         password
@@ -241,7 +241,7 @@
 
       // 存储token和用户信息
       userStore.setToken(token, refreshToken)
-      const userInfo = await UserService.getUserInfo()
+      const userInfo = await fetchGetUserInfo()
       // 缓存用户信息
       userStore.setUserInfo(userInfo)
       userStore.setLoginStatus(true)
@@ -293,7 +293,7 @@
 
   // 切换主题
   import { useTheme } from '@/composables/useTheme'
-  import { UserService } from '@/api/system/usersApi'
+  import { fetchLogin, fetchGetUserInfo } from '@/api/auth'
 
   const toggleTheme = () => {
     let { LIGHT, DARK } = SystemThemeEnum
@@ -304,3 +304,4 @@
 <style lang="scss" scoped>
   @use './index';
 </style>
+

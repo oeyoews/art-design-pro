@@ -189,6 +189,12 @@
       "backBtnText": "Back to login"
     }
   },
+  "greeting": {
+    "dawn": "Good morning!",
+    "morning": "Good morning!",
+    "afternoon": "Good afternoon!",
+    "evening": "Good evening!"
+  },
   "exceptionPage": {
     "gohome": "Go Home",
     "403": "Sorry, you do not have permission to access this page",
@@ -265,8 +271,15 @@
       "tablesBasic": "Basic Tables",
       "tables": "Advanced Tables",
       "tablesTree": "Tree Table Layout",
-      "searchBar": "Search Form"
+      "searchBar": "Search Form",
+      "permission": {
+        "title": "Frontend Permission",
+        "switchRole": "Toggle Auth",
+        "buttonAuth": "Button Authority",
+        "pageVisibility": "Super Admin Visibility"
+      }
     },
+
     "system": {
       "title": "System Settings",
       "user": "User Manage",
@@ -292,7 +305,8 @@
     },
     "help": {
       "title": "Help Center",
-      "document": "Document"
+      "document": "Document",
+      "liteVersion": "Lite Version"
     }
   },
   "table": {

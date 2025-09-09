@@ -1,6 +1,6 @@
 <!-- 顶部栏 -->
 <template>
-  <div class="layout-top-bar" :class="[tabStyle]" :style="{ width: topBarWidth() }">
+  <div class="layout-top-bar" :class="[tabStyle]">
     <div class="menu">
       <div class="left" style="display: flex">
         <!-- 系统信息  -->
@@ -56,14 +56,14 @@
         </div>
 
         <!-- 全屏按钮 -->
-        <!-- <div class="btn-box screen-box" v-if="shouldShowFullscreen" @click="toggleFullScreen">
+        <div class="btn-box screen-box" v-if="shouldShowFullscreen" @click="toggleFullScreen">
           <div
             class="btn"
             :class="{ 'full-screen-btn': !isFullscreen, 'exit-full-screen-btn': isFullscreen }"
           >
             <i class="iconfont-sys">{{ isFullscreen ? '&#xe62d;' : '&#xe8ce;' }}</i>
           </div>
-        </div> -->
+        </div>
         <!-- 通知 -->
         <div class="btn-box notice-btn" v-if="shouldShowNotification" @click="visibleNotice">
           <div class="btn notice-button">
@@ -72,12 +72,12 @@
           </div>
         </div>
         <!-- 聊天 -->
-        <!-- <div class="btn-box chat-btn" v-if="shouldShowChat" @click="openChat">
+        <div class="btn-box chat-btn" v-if="shouldShowChat" @click="openChat">
           <div class="btn chat-button">
             <i class="iconfont-sys">&#xe89a;</i>
             <span class="dot"></span>
           </div>
-        </div> -->
+        </div>
         <!-- 语言 -->
         <div class="btn-box" v-if="shouldShowLanguage">
           <ElDropdown @command="changeLanguage" popper-class="langDropDownStyle">
@@ -149,7 +149,7 @@
                   <img class="cover" src="@imgs/user/avatar.webp" style="float: left" />
                   <div class="user-wrap">
                     <span class="name">{{ userInfo.user?.userName }}</span>
-                    <span class="email">admin@gmail.com</span>
+                    <!-- <span class="email">{{ userInfo.email }}</span> -->
                   </div>
                 </div>
                 <ul class="user-menu">
@@ -164,8 +164,8 @@
                   <li @click="toGithub()">
                     <i class="menu-icon iconfont-sys">&#xe8d6;</i>
                     <span class="menu-txt">{{ $t('topBar.user.github') }}</span>
-                  </li> -->
-                  <!-- <li @click="lockScreen()">
+                  </li>
+                  <li @click="lockScreen()">
                     <i class="menu-icon iconfont-sys">&#xe817;</i>
                     <span class="menu-txt">{{ $t('topBar.user.lockScreen') }}</span>
                   </li> -->
@@ -191,7 +191,7 @@
   import { useRouter } from 'vue-router'
   import { ElMessageBox } from 'element-plus'
   import { useFullscreen, useWindowSize } from '@vueuse/core'
-  import { LanguageEnum, MenuTypeEnum, MenuWidth } from '@/enums/appEnum'
+  import { LanguageEnum, MenuTypeEnum } from '@/enums/appEnum'
   import { useSettingStore } from '@/store/modules/setting'
   import { useUserStore } from '@/store/modules/user'
   import { useMenuStore } from '@/store/modules/menu'
@@ -264,30 +264,6 @@
    */
   const toggleFullScreen = (): void => {
     toggleFullscreen()
-  }
-
-  /**
-   * 计算顶部栏宽度
-   * @returns {string} 计算后的宽度值
-   */
-  const topBarWidth = (): string => {
-    const { TOP, DUAL_MENU, TOP_LEFT } = MenuTypeEnum
-    const { getMenuOpenWidth } = settingStore
-    const { isFirstLevel } = router.currentRoute.value.meta
-    const type = menuType.value
-    const isMenuOpen = menuOpen.value
-
-    const isTopLayout = type === TOP || (type === TOP_LEFT && isFirstLevel)
-
-    if (isTopLayout) {
-      return '100%'
-    }
-
-    if (type === DUAL_MENU) {
-      return isFirstLevel ? 'calc(100% - 80px)' : `calc(100% - 80px - ${getMenuOpenWidth})`
-    }
-
-    return isMenuOpen ? `calc(100% - ${getMenuOpenWidth})` : `calc(100% - ${MenuWidth.CLOSE})`
   }
 
   /**

@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url'
 // import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://devtools.vuejs.org/getting-started/introduction
-import vueDevTools from 'vite-plugin-vue-devtools'
+// import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default ({ mode }: { mode: string }) => {
   const root = process.cwd()

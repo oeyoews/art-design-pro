@@ -6,6 +6,9 @@ export class StorageConfig {
   /** 当前应用版本 */
   static readonly CURRENT_VERSION = __APP_VERSION__
 
+  /** 主题键名（index.html中使用了，如果修改，需要同步修改） */
+  static readonly THEME_KEY = 'sys-theme'
+
   /** 存储键前缀 */
   static readonly STORAGE_PREFIX = 'sys-v'
 
@@ -90,3 +93,4 @@ export class StorageConfig {
     return match ? match[1] : null
   }
 }
+

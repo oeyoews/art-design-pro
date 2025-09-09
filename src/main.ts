@@ -19,6 +19,7 @@ import '@icons/oeyoews/iconfont.css'                 // 系统图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { setupGlobDirectives } from './directives'
 import language from './locales'
+import { setupErrorHandle } from './utils/sys/error-handle'
 
 document.addEventListener(
   'touchstart',
@@ -30,6 +31,7 @@ const app = createApp(App)
 initStore(app)
 initRouter(app)
 setupGlobDirectives(app)
+setupErrorHandle(app)
 
 app.use(language)
 

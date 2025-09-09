@@ -9,9 +9,11 @@
 
     <ElCard class="art-table-card" shadow="never">
       <!-- 表格头部 -->
-      <ArtTableHeader v-model:columns="columnChecks" @refresh="refreshData">
+      <ArtTableHeader v-model:columns="columnChecks" :loading="loading" @refresh="refreshData">
         <template #left>
-          <ElButton @click="showDialog('add')">新增用户</ElButton>
+          <ElSpace wrap>
+            <ElButton @click="showDialog('add')" v-ripple>新增用户</ElButton>
+          </ElSpace>
         </template>
       </ArtTableHeader>
 
@@ -43,16 +45,16 @@
   import { ACCOUNT_TABLE_DATA } from '@/mock/temp/formData'
   import { ElMessageBox, ElMessage, ElTag } from 'element-plus'
   import { useTable } from '@/composables/useTable'
-  import { UserService } from '@/api/system/usersApi'
+  import { fetchGetUserList } from '@/api/system-manage'
   import UserSearch from './modules/user-search.vue'
   import UserDialog from './modules/user-dialog.vue'
   import { USER_STATUS_CONFIG } from '@/utils/constants/system'
 
   defineOptions({ name: 'User' })
 
-  type UserListItem = Api.User.UserListItem
+  type UserListItem = Api.SystemManage.UserListItem
+
   const { width } = useWindowSize()
-  const { getUserList, delUser } = UserService
 
   // 弹窗相关
   const dialogType = ref<Form.DialogType>('add')
@@ -93,16 +95,14 @@
     handleCurrentChange,
     refreshData,
     refreshRemove
-  } = useTable<UserListItem>({
+  } = useTable({
     // 核心配置
     core: {
-      apiFn: getUserList,
+      apiFn: fetchGetUserList,
       apiParams: {
-        current: 1,
-        size: 20,
         ...searchForm.value,
         pageNum: 1,
-        pageSize: 20
+        // pageSize: 20
       },
       excludeParams: ['daterange'],
       // 自定义分页字段映射，同时需要在 apiParams 中配置字段名
@@ -113,7 +113,7 @@
       columnsFactory: () => [
         { type: 'selection' }, // 勾选列
         // { type: 'index', width: 60, label: '序号' }, // 序号
-        { prop: 'userId', width: 80, label: '用户编号' }, // 序号
+        { prop: 'userId', width: 80, label: '用户编号', }, // 序号
         // { type: 'expand' }, // 展开列
         {
           prop: 'avatar',

@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import { useUserStore } from '@/store/modules/user'
 import { ApiStatus } from './status'
-import { HttpError, handleError, showError } from './error'
+import { HttpError, handleError, showError, showSuccess } from './error'
 import { $t } from '@/locales'
 
 /** 请求配置常量 */
@@ -18,6 +18,7 @@ let unauthorizedTimer: NodeJS.Timeout | null = null
 /** 扩展 AxiosRequestConfig */
 interface ExtendedAxiosRequestConfig extends AxiosRequestConfig {
   showErrorMessage?: boolean
+  showSuccessMessage?: boolean
 }
 
 const { VITE_API_URL, VITE_WITH_CREDENTIALS } = import.meta.env
@@ -64,7 +65,7 @@ axiosInstance.interceptors.request.use(
 
 /** 响应拦截器 */
 axiosInstance.interceptors.response.use(
-  (response: AxiosResponse<Api.Http.BaseResponse>) => {
+  (response: AxiosResponse<Http.BaseResponse>) => {
     const { code, msg } = response.data
     if (code === ApiStatus.success) return response
     if (code === ApiStatus.unauthorized) handleUnauthorizedError(msg)
@@ -157,7 +158,11 @@ export async function request<T = any>(config: ExtendedAxiosRequestConfig): Prom
   }
 
   try {
-    const res = await axiosInstance.request<Api.Http.BaseResponse<T>>(config)
+     const res = await axiosInstance.request<Http.BaseResponse<T>>(config)
+    // 显示成功消息
+    if (config.showSuccessMessage && res.data.msg) {
+      showSuccess(res.data.msg)
+    }
     return res.data as T
   } catch (error) {
     if (error instanceof HttpError && error.code !== ApiStatus.unauthorized) {
