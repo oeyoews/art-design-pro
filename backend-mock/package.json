@@ -1,0 +1,16 @@
+{
+  "name": "art-design-backend-mock",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#mock-handlers": "../mock/api-handlers.ts"
+  },
+  "scripts": {
+    "build": "nitro build",
+    "start": "nitro dev --port 3333 --host",
+    "preview": "node .output/server/index.mjs"
+  },
+  "devDependencies": {
+    "nitropack": "^2.10.4"
+  }
+}

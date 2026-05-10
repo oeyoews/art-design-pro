@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "@/*": ["src/*"],
+      "#mock-handlers": ["mock/api-handlers.ts"]
+    },
+    "types": ["node"]
+  },
+  "include": ["../mock/**/*.ts", "../src/**/*.ts", "./routes/**/*.ts", "./nitro.config.ts"]
+}

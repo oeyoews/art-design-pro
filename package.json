@@ -9,7 +9,10 @@
   "scripts": {
     "dev": "vite",
     "dev:open": "vite --open",
-    "build": "vue-tsc --noEmit && vite build",
+    "mock:server": "pnpm -C backend-mock run start",
+    "mock:server:build": "pnpm -C backend-mock run build",
+    "mock:server:preview": "pnpm -C backend-mock run preview",
+    "build": "vite build",
     "serve": "vite preview",
     "lint:prettier": "prettier --write \"**/*.{js,cjs,ts,json,tsx,css,less,scss,vue,html,md}\""
   },
