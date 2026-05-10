@@ -48,7 +48,7 @@
               />
             </ElFormItem>
 
-            <!-- 推拽验证 -->
+            <!-- 拖拽验证（已关闭）
             <div class="relative pb-5 mt-6">
               <div
                 class="relative z-[2] overflow-hidden select-none rounded-lg border border-transparent tad-300"
@@ -72,6 +72,7 @@
                 {{ $t('login.placeholder.slider') }}
               </p>
             </div>
+            -->
 
             <div class="flex-cb mt-2 text-sm">
               <ElCheckbox v-model="formData.rememberPassword">{{
@@ -108,18 +109,14 @@
 </template>
 
 <script setup lang="ts">
-  import AppConfig from '@/config'
   import { useUserStore } from '@/store/modules/user'
   import { useI18n } from 'vue-i18n'
   import { HttpError } from '@/utils/http/error'
   import { fetchLogin } from '@/api/auth'
-  import { ElNotification, type FormInstance, type FormRules } from 'element-plus'
-  import { useSettingStore } from '@/store/modules/setting'
+  import { type FormInstance, type FormRules } from 'element-plus'
 
   defineOptions({ name: 'Login' })
 
-  const settingStore = useSettingStore()
-  const { isDark } = storeToRefs(settingStore)
   const { t, locale } = useI18n()
   const formKey = ref(0)
 
@@ -162,15 +159,14 @@
     }
   ])
 
-  const dragVerify = ref()
+  // const dragVerify = ref()
 
   const userStore = useUserStore()
   const router = useRouter()
   const route = useRoute()
-  const isPassing = ref(false)
-  const isClickPass = ref(false)
+  // const isPassing = ref(false)
+  // const isClickPass = ref(false)
 
-  const systemName = AppConfig.systemInfo.name
   const formRef = ref<FormInstance>()
 
   const formData = reactive({
@@ -208,11 +204,11 @@
       const valid = await formRef.value.validate()
       if (!valid) return
 
-      // 拖拽验证
-      if (!isPassing.value) {
-        isClickPass.value = true
-        return
-      }
+      // 拖拽验证（已关闭）
+      // if (!isPassing.value) {
+      //   isClickPass.value = true
+      //   return
+      // }
 
       loading.value = true
 
@@ -233,8 +229,8 @@
       userStore.setToken(token, refreshToken)
       userStore.setLoginStatus(true)
 
-      // 登录成功处理
-      showLoginSuccessNotice()
+      // 登录成功处理（提示已关闭）
+      // showLoginSuccessNotice()
 
       // 获取 redirect 参数，如果存在则跳转到指定页面，否则跳转到首页
       const redirect = route.query.redirect as string
@@ -250,27 +246,27 @@
       }
     } finally {
       loading.value = false
-      resetDragVerify()
+      // resetDragVerify()
     }
   }
 
-  // 重置拖拽验证
-  const resetDragVerify = () => {
-    dragVerify.value.reset()
-  }
+  // 重置拖拽验证（已关闭）
+  // const resetDragVerify = () => {
+  //   dragVerify.value.reset()
+  // }
 
-  // 登录成功提示
-  const showLoginSuccessNotice = () => {
-    setTimeout(() => {
-      ElNotification({
-        title: t('login.success.title'),
-        type: 'success',
-        duration: 2500,
-        zIndex: 10000,
-        message: `${t('login.success.message')}, ${systemName}!`
-      })
-    }, 1000)
-  }
+  // 登录成功提示（已注释）
+  // const showLoginSuccessNotice = () => {
+  //   setTimeout(() => {
+  //     ElNotification({
+  //       title: t('login.success.title'),
+  //       type: 'success',
+  //       duration: 2500,
+  //       zIndex: 10000,
+  //       message: `${t('login.success.message')}, ${systemName}!`
+  //     })
+  //   }, 1000)
+  // }
 </script>
 
 <style scoped>

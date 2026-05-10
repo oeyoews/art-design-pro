@@ -37,7 +37,7 @@
             <ArtSvgIcon icon="ri:user-3-line" />
             <span>{{ $t('topBar.user.userCenter') }}</span>
           </li>
-          <li class="btn-item" @click="toDocs()">
+          <!-- <li class="btn-item" @click="toDocs()">
             <ArtSvgIcon icon="ri:book-2-line" />
             <span>{{ $t('topBar.user.docs') }}</span>
           </li>
@@ -48,7 +48,7 @@
           <li class="btn-item" @click="lockScreen()">
             <ArtSvgIcon icon="ri:lock-line" />
             <span>{{ $t('topBar.user.lockScreen') }}</span>
-          </li>
+          </li> -->
           <div class="w-full h-px my-2 bg-g-300/80"></div>
           <div class="log-out c-p" @click="loginOut">
             {{ $t('topBar.user.logout') }}
@@ -64,8 +64,8 @@
   import { useRouter } from 'vue-router'
   import { ElMessageBox } from 'element-plus'
   import { useUserStore } from '@/store/modules/user'
-  import { WEB_LINKS } from '@/utils/constants'
-  import { mittBus } from '@/utils/sys'
+  // import { WEB_LINKS } from '@/utils/constants'
+  // import { mittBus } from '@/utils/sys'
 
   defineOptions({ name: 'ArtUserMenu' })
 
@@ -84,26 +84,17 @@
     router.push(path)
   }
 
-  /**
-   * 打开文档页面
-   */
-  const toDocs = (): void => {
-    window.open(WEB_LINKS.DOCS)
-  }
+  // const toDocs = (): void => {
+  //   window.open(WEB_LINKS.DOCS)
+  // }
 
-  /**
-   * 打开 GitHub 页面
-   */
-  const toGithub = (): void => {
-    window.open(WEB_LINKS.GITHUB)
-  }
+  // const toGithub = (): void => {
+  //   window.open(WEB_LINKS.GITHUB)
+  // }
 
-  /**
-   * 打开锁屏功能
-   */
-  const lockScreen = (): void => {
-    mittBus.emit('openLockScreen')
-  }
+  // const lockScreen = (): void => {
+  //   mittBus.emit('openLockScreen')
+  // }
 
   /**
    * 用户登出确认
