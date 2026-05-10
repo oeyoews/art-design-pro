@@ -24,7 +24,7 @@
       </ElCol>
     </ElRow>
 
-    <AboutProject />
+    <!-- <AboutProject /> -->
   </div>
 </template>
 
@@ -35,7 +35,7 @@
   import NewUser from './modules/new-user.vue'
   import Dynamic from './modules/dynamic-stats.vue'
   import TodoList from './modules/todo-list.vue'
-  import AboutProject from './modules/about-project.vue'
+  // import AboutProject from './modules/about-project.vue'
 
   defineOptions({ name: 'Console' })
 </script>
