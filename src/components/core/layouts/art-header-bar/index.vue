@@ -147,9 +147,9 @@
         </div>
 
         <!-- 主题切换按钮 -->
+        <!-- class="theme-toggle-btn" -->
         <ArtIconButton
           v-if="shouldShowThemeToggle"
-          class="theme-toggle-btn"
           @click="themeAnimation"
           :icon="isDark ? 'ri:sun-fill' : 'ri:moon-line'"
         />
