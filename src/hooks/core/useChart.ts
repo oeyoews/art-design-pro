@@ -345,7 +345,8 @@ export function useChart(options: UseChartOptions = {}) {
       right: 15,
       bottom: 8,
       left: 0,
-      containLabel: true,
+      outerBoundsMode: 'same' as const,
+      outerBoundsContain: 'axisLabel' as const,
       ...baseGrid
     }
 

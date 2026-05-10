@@ -246,7 +246,9 @@ async function cleanRouteModules() {
       'examples.ts',
       'article.ts',
       'safeguard.ts',
-      'help.ts'
+      'help.ts',
+      'result.ts',
+      'exception.ts'
     ]
 
     for (const module of modulesToRemove) {
@@ -354,18 +356,11 @@ export const systemRoutes: AppRouteRecord = {
     const indexContent = `import { AppRouteRecord } from '@/types/router'
 import { dashboardRoutes } from './dashboard'
 import { systemRoutes } from './system'
-import { resultRoutes } from './result'
-import { exceptionRoutes } from './exception'
 
 /**
  * 导出所有模块化路由
  */
-export const routeModules: AppRouteRecord[] = [
-  dashboardRoutes,
-  systemRoutes,
-  resultRoutes,
-  exceptionRoutes
-]
+export const routeModules: AppRouteRecord[] = [dashboardRoutes, systemRoutes]
 `
     await fs.writeFile(path.join(modulesPath, 'index.ts'), indexContent, 'utf-8')
 
@@ -383,7 +378,7 @@ async function cleanRoutesAlias() {
   try {
     const cleanedAlias = `/**
  * 公共路由别名
- # 存放系统级公共路由路径，如布局容器、登录页等   
+ # 存放系统级公共路由路径，如布局容器、登录页等
  */
 export enum RoutesAlias {
   Layout = '/index/index', // 布局容器
@@ -652,7 +647,7 @@ async function showCleanupWarning() {
     {
       icon: icons.code,
       name: '路由模块文件',
-      desc: '删除演示路由模块，只保留核心模块（dashboard、system、result、exception）',
+      desc: '删除演示路由模块，只保留核心模块（dashboard、system）',
       color: theme.primary
     },
     {
@@ -698,8 +693,6 @@ async function showCleanupWarning() {
   const preservedModules = [
     { name: 'Dashboard', desc: '工作台页面' },
     { name: 'System', desc: '系统管理模块' },
-    { name: 'Result', desc: '结果页面' },
-    { name: 'Exception', desc: '异常页面' },
     { name: 'Auth', desc: '登录注册功能' },
     { name: 'Core Components', desc: '核心组件库' }
   ]

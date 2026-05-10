@@ -13,19 +13,22 @@
  * @author Art Design Pro Team
  */
 
-// import { addCollection } from '@iconify/vue'
+import { addCollection } from '@iconify/vue'
 
-// // 导入离线图标数据
+import fluentIcons from '@iconify-json/fluent/icons.json'
+import iconParkOutlineIcons from '@iconify-json/icon-park-outline/icons.json'
+import iconamoonIcons from '@iconify-json/iconamoon/icons.json'
+import ixIcons from '@iconify-json/ix/icons.json'
+import riIcons from '@iconify-json/ri/icons.json'
+import solarIcons from '@iconify-json/solar/icons.json'
+import systemUiconsIcons from '@iconify-json/system-uicons/icons.json'
+import vaadinIcons from '@iconify-json/vaadin/icons.json'
 
-// // 系统必要图标库
-// import riIcons from '@iconify-json/ri/icons.json'
-
-// // 演示图标库（可选，生产环境可移除）
-// import svgSpinners from '@iconify-json/svg-spinners/icons.json'
-// import lineMd from '@iconify-json/line-md/icons.json'
-
-// // 注册离线图标集
-
-// addCollection(riIcons)
-// addCollection(svgSpinners)
-// addCollection(lineMd)
+addCollection(riIcons)
+addCollection(fluentIcons)
+addCollection(iconamoonIcons)
+addCollection(systemUiconsIcons)
+addCollection(vaadinIcons)
+addCollection(solarIcons)
+addCollection(iconParkOutlineIcons)
+addCollection(ixIcons)
