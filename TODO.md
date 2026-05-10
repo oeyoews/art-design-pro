@@ -1,1 +1,1 @@
-* iconify to offline mode
+- iconify to offline mode

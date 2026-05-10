@@ -15,8 +15,14 @@ import { viteMockServe } from 'vite-plugin-mock'
 export default ({ command, mode }: { command: string; mode: string }) => {
   const root = process.cwd()
   const env = loadEnv(mode, root)
-  const { VITE_VERSION, VITE_PORT, VITE_BASE_URL, VITE_API_URL, VITE_API_PROXY_URL, VITE_USE_MOCK } =
-    env
+  const {
+    VITE_VERSION,
+    VITE_PORT,
+    VITE_BASE_URL,
+    VITE_API_URL,
+    VITE_API_PROXY_URL,
+    VITE_USE_MOCK
+  } = env
   const useLocalMock = VITE_USE_MOCK === 'true'
 
   console.log(`🚀 API_URL = ${VITE_API_URL}`)
@@ -110,7 +116,7 @@ export default ({ command, mode }: { command: string; mode: string }) => {
         ext: '.gz', // 压缩后的文件名后缀
         threshold: 10240, // 只有大小大于该值的资源会被处理 10240B = 10KB
         deleteOriginFile: false // 压缩后是否删除原文件
-      }),
+      })
       // vueDevTools()
       // 打包分析
       // visualizer({
