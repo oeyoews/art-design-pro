@@ -128,6 +128,7 @@ export default ({ command, mode }: { command: string; mode: string }) => {
     // 依赖预构建：避免运行时重复请求与转换，提升首次加载速度
     optimizeDeps: {
       include: [
+        'vue-draggable-plus',
         'echarts/core',
         'echarts/charts',
         'echarts/components',

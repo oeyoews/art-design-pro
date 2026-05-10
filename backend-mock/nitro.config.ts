@@ -7,6 +7,10 @@ const workspaceRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 process.env.COMPATIBILITY_DATE = new Date().toISOString()
 
 export default defineNitroConfig({
+  experimental: {
+    openAPI: true,
+    database: false,
+  },
   alias: {
     '@': resolve(workspaceRoot, 'src'),
     '#mock-handlers': resolve(workspaceRoot, 'mock/api-handlers.ts')

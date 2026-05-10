@@ -3,7 +3,7 @@ import { handleMenus } from './api-handlers'
 
 export default [
   {
-    url: '/api/v3/system/menus',
+    url: '/api/system/menus',
     method: 'get',
     response: () => handleMenus()
   }

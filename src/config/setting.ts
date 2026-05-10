@@ -53,7 +53,7 @@ export const SETTING_DEFAULT_CONFIG = {
   /** 是否显示语言切换 */
   showLanguage: false,
   /** 是否显示进度条 */
-  showNprogress: false,
+  showNprogress: true,
   /** 是否显示设置引导 */
   showSettingGuide: false,
   /** 是否显示节日文本 */
