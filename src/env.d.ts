@@ -1,8 +1,17 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_USE_MOCK?: string
-  readonly VITE_API_PROXY_URL?: string
+  readonly VITE_VERSION: string
+  readonly VITE_PORT: string
+  readonly VITE_BASE_URL: string
+  readonly VITE_ACCESS_MODE: string
+  readonly VITE_WITH_CREDENTIALS: string
+  readonly VITE_OPEN_ROUTE_INFO: string
+  readonly VITE_LOCK_ENCRYPT_KEY: string
+  readonly VITE_API_URL: string
+  readonly VITE_USE_MOCK: string
+  readonly VITE_API_PROXY_URL: string
+  readonly VITE_DROP_CONSOLE: string
 }
 
 interface ImportMeta {

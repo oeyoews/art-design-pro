@@ -29,16 +29,6 @@ export default ({ command, mode }: { command: string; mode: string }) => {
   console.log(`🚀 VERSION = ${VITE_VERSION}`)
   console.log(`🚀 USE_MOCK = ${useLocalMock}`)
 
-  const apiProxy =
-    !useLocalMock && VITE_API_PROXY_URL
-      ? {
-          '/api': {
-            target: VITE_API_PROXY_URL,
-            changeOrigin: true
-          }
-        }
-      : {}
-
   return defineConfig({
     define: {
       __APP_VERSION__: JSON.stringify(VITE_VERSION)
@@ -46,7 +36,16 @@ export default ({ command, mode }: { command: string; mode: string }) => {
     base: VITE_BASE_URL,
     server: {
       port: Number(VITE_PORT),
-      proxy: apiProxy,
+      ...(!useLocalMock && VITE_API_PROXY_URL
+        ? {
+            proxy: {
+              '/api': {
+                target: VITE_API_PROXY_URL,
+                changeOrigin: true
+              }
+            }
+          }
+        : {}),
       host: true
     },
     // 路径别名
