@@ -67,6 +67,9 @@ export default ({ command, mode }: { command: string; mode: string }) => {
       minify: 'terser',
       terserOptions: {
         compress: {
+          // vue-draggable-plus 使用动态生命周期名；Terser reduce_vars 会破坏引用
+          // https://github.com/Alfred-Skyblue/vue-draggable-plus/issues/189
+          reduce_vars: false,
           // 生产环境去除 console
           drop_console: true,
           // 生产环境去除 debugger
