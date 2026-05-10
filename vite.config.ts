@@ -2,22 +2,36 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import vueDevTools from 'vite-plugin-vue-devtools'
+// import vueDevTools from 'vite-plugin-vue-devtools'
 import viteCompression from 'vite-plugin-compression'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import ElementPlus from 'unplugin-element-plus/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import tailwindcss from '@tailwindcss/vite'
+import { viteMockServe } from 'vite-plugin-mock'
 // import { visualizer } from 'rollup-plugin-visualizer'
 
-export default ({ mode }: { mode: string }) => {
+export default ({ command, mode }: { command: string; mode: string }) => {
   const root = process.cwd()
   const env = loadEnv(mode, root)
-  const { VITE_VERSION, VITE_PORT, VITE_BASE_URL, VITE_API_URL, VITE_API_PROXY_URL } = env
+  const { VITE_VERSION, VITE_PORT, VITE_BASE_URL, VITE_API_URL, VITE_API_PROXY_URL, VITE_USE_MOCK } =
+    env
+  const useLocalMock = VITE_USE_MOCK === 'true'
 
   console.log(`🚀 API_URL = ${VITE_API_URL}`)
   console.log(`🚀 VERSION = ${VITE_VERSION}`)
+  console.log(`🚀 USE_MOCK = ${useLocalMock}`)
+
+  const apiProxy =
+    !useLocalMock && VITE_API_PROXY_URL
+      ? {
+          '/api': {
+            target: VITE_API_PROXY_URL,
+            changeOrigin: true
+          }
+        }
+      : {}
 
   return defineConfig({
     define: {
@@ -26,12 +40,7 @@ export default ({ mode }: { mode: string }) => {
     base: VITE_BASE_URL,
     server: {
       port: Number(VITE_PORT),
-      proxy: {
-        '/api': {
-          target: VITE_API_PROXY_URL,
-          changeOrigin: true
-        }
-      },
+      proxy: apiProxy,
       host: true
     },
     // 路径别名
@@ -66,6 +75,11 @@ export default ({ mode }: { mode: string }) => {
       }
     },
     plugins: [
+      viteMockServe({
+        mockPath: 'mock',
+        enable: command === 'serve' && useLocalMock,
+        logger: true
+      }),
       vue(),
       tailwindcss(),
       // 自动按需导入 API
@@ -97,7 +111,7 @@ export default ({ mode }: { mode: string }) => {
         threshold: 10240, // 只有大小大于该值的资源会被处理 10240B = 10KB
         deleteOriginFile: false // 压缩后是否删除原文件
       }),
-      vueDevTools()
+      // vueDevTools()
       // 打包分析
       // visualizer({
       //   open: true,
@@ -128,7 +142,7 @@ export default ({ mode }: { mode: string }) => {
         // sass variable and mixin
         scss: {
           additionalData: `
-            @use "@styles/core/el-light.scss" as *; 
+            @use "@styles/core/el-light.scss" as *;
             @use "@styles/core/mixin.scss" as *;
           `
         }
